@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>OWASP Top 10 OS Command Injection</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Hacking Blog" />
+    <link rel="shortcut icon" href="http://localhost:4000/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="http://localhost:4000/OWASP-Top-10-Command-Injection" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="0x221B" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="OWASP Top 10 OS Command Injection" />
+    <meta property="og:description" content="OWASP Top 10: 1. Injection (OS Command Injection) I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be" />
+    <meta property="og:url" content="http://localhost:4000/OWASP-Top-10-Command-Injection" />
+    <meta property="og:image" content="http://localhost:4000/assets/images/pingid.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2020-07-22T00:00:00+01:00" />
+    <meta property="article:modified_time" content="2020-07-22T00:00:00+01:00" />
+    <meta property="article:tag" content="Owasp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OWASP Top 10 OS Command Injection" />
+    <meta name="twitter:description" content="OWASP Top 10: 1. Injection (OS Command Injection) I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be" />
+    <meta name="twitter:url" content="http://localhost:4000/" />
+    <meta name="twitter:image" content="http://localhost:4000/assets/images/pingid.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="0x221B" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Owasp" />
+    <meta name="twitter:site" content="@JonoH904" />
+    <meta name="twitter:creator" content="@JonoH904" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "0x221B",
+        "logo": "http://localhost:4000/assets/images/blog-icon.png"
+    },
+    "url": "http://localhost:4000/OWASP-Top-10-Command-Injection",
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://localhost:4000/assets/images/pingid.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:4000/OWASP-Top-10-Command-Injection"
+    },
+    "description": "OWASP Top 10: 1. Injection (OS Command Injection) I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="OWASP Top 10 OS Command Injection" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="http://localhost:4000/"><img src="/assets/images/blog-icon.png" alt="0x221B" /></a>
+            
+        
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/JonoH904" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-owasp post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="22 July 2020">22 July 2020</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/owasp/'>OWASP</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">OWASP Top 10 OS Command Injection</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/pingid.png)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1>OWASP Top 10: 1. Injection (OS Command Injection)</h1>
+
+<p>I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found <a href="https://owasp.org/www-project-top-ten/">here</a>.</p>
+
+<ol>
+  <li>Injection</li>
+  <li>Broken Authentication</li>
+  <li>Sensitive Data Exposure</li>
+  <li>XXE</li>
+  <li>Broken Access Control</li>
+  <li>Security Misconfiguration</li>
+  <li>XSS</li>
+  <li>Insecure Deserialisation</li>
+  <li>Using Components With Known Vulnerabilities</li>
+  <li>Insufficient Logging and Monitoring</li>
+</ol>
+
+<p>So starting off with this article I shall cover part of the first item on the list. Injection is an umbrella term and covers quite a few web vulnerabilities. For example OS, SQL and LDAP injection. This article will focus on OS command injection.</p>
+
+<h2>Command Injection</h2>
+
+<p><strong>Impact:</strong> Critical          <strong>Risk:</strong> High          <strong>Difficulty:</strong> Medium to High</p>
+
+<h3>So what is OS Command Injection?</h3>
+
+<p>Simply put OS Command Injection is the ability to remotely execute OS commands on a target system. The reason this vulnerability exists is that the web page executes a shell command as part of its functionality and the command injection piggy backs off this to execute commands for the attacker. The classic example of this is a page that lets you ping another IP address. By simply adding a ;ls to the ip the shell that executes the ping sees this as a new command and executes it as well. This is of course an over simplified example and this particular vulnerability is usually far more complicated to pull off. If you do manage to get it however you are a good way to compromising the system, depending on which user you are executing commands as.</p>
+
+<h3>How do I find OS Command Injection?</h3>
+
+<p>The first thing to establish is what kind of OS the system is running. This is important as it will let you know what type of commands you can execute. No point trying to execute ls if you are on a Windows system.</p>
+
+<p>The following areas should be tested for injection possibilities:</p>
+
+<ul>
+  <li>POST request: Body data parameters</li>
+  <li>GET request: Parameters submitted in URL</li>
+  <li>Headers including: Cookies, Referer, X-Forward-For, User Agent, Any custom headers</li>
+</ul>
+
+<p>To test these parameters a good place to start is with the ping command. This allows an attacker to specify the amount of packets sent and thus the delay in the loading of the web page.</p>
+
+<p>With the options -c in Linux or the -n in Windows will tell ping exactly how many requests we want it to send and these equate to roughly one a second. So if a page loads normally in less than 2 seconds and then we feed it ; ping -c 10 8.8.8.8 if the page takes around 10 seconds instead of two its likely it is vulnerable to command injection. Best to check this kind of thing a few times as speeds can obviously vary.  The following command suggested by <a href="https://portswigger.net/support/using-burp-to-test-for-os-command-injection-vulnerabilities">Portswigger</a> will cause a 10 second delay in Windows and Linux based systems if they are vulnerable and unfiltered:</p>
+
+<blockquote>
+  <p>|| ping -c 10 127.0.0.1 ; x || ping -n 10 127.0.0.1 &amp;</p>
+</blockquote>
+
+<p>The main way to test command injection is to append a command to a bit of user submitted data that is used as an argument for an executed command on the system. To do this several symbols can be tested to enable an attacker to append the malicious command to the normal one. Below is a list of symbols that should be tried when trying to execute commands:</p>
+
+<ul>
+  <li>;</li>
+  <li>|</li>
+  <li>||</li>
+  <li>&amp;</li>
+  <li>&amp;&amp;</li>
+  <li>\n</li>
+  <li>()</li>
+  <li>{}</li>
+  <li>{{}}</li>
+</ul>
+
+<p>On linux you can also try adding `` or $ to execute inline commands. It is also worth noting that it may be needed to break out of ‘ or “ to be able to execute commands. These symbols can also be tested at the end of a line as well as the beginning to see if the results differ. Additionally, as well as appending commands on to expected input it should also be tested by completely replacing the expected command with the malicious one. URL encoding is likely required when submitting and spaces can be filled with either %20 and +.</p>
+
+<p>If when using the commands and symbols above the page takes the expected time to load (based on the number of ping packets) the next step is to find a way to read the results. One of two things will occur. Either the results of the ping requests will be printed to the page (see Fig 1) or they won’t. If it looks like the ping request worked but nothing prints out then see the What if nothing prints to the screen? section below.</p>
+
+<p><img src="assets/images/pingid.png" alt="Command Injection example" /></p>
+
+<p>Fig 1. Example of the command 127.0.0.1 ; id being printed to screen from DVWA</p>
+
+<p>If the results do print to screen then the echo command is your friend when it comes to testing for command injection. By using echo you can quickly establish whether it is possible to print the output of commands to the page. The command injection can be confirmed with a simple echo random string and see if the random string appears on the screen. It is important to check as there is a possibility of false positives with time delays as it could just be that the page took a bit longer to load due to a networking issue. This is a problem that can occur with some web scanners so confirmation is important. From here, commands such as ls and cat can be used on linux servers to read directories and files and then control of the system is pretty much yours.</p>
+
+<p>An important step to discovering just how much damage you can do with your command injection is to establish which user you are. On linux this is likely to be www-data and so your abilities will be limited compared to a normal user or even root. But from there it moves on to privilege escalation (if it is in scope). So to establish which user your commands are executed as you can inject the command ‘whoami’ which should provide detail about exactly who you are. The other great thing about this command is that it works for both Linux and Windows servers.</p>
+
+<h3>What if nothing prints to the screen?</h3>
+
+<p>In an ideal world (for attackers at least) any command that is executed will immediately print its output to the web page signalling loud and clear that it is indeed vulnerable. This would be achieved with the echo command mentioned earlier. However, this is not always the case and sometimes you won’t see anything but the command will still be executed. This is known as a blind vulnerability. So how can you know if the commands were successful? There are a couple of ways.</p>
+
+<p>Depending on the situation of course you can use something like Wireshark to confirm the injection. For situations like Hack the Box where you are on the same network by simply starting up Wireshark and executing the ping it will soon show any ICMP packets that have been sent from the target system. This of course means your IP is in all their logs so like I said it depends on the situation. It is also possible to do this over different networks as well using things like ngrok or by setting up a cloud service but these would still fill logs with your IP address which isn’t ideal in most situations but perhaps useful for things like bug bounties. From here a reverse shell can be attempted to gain access to the system (see below).</p>
+
+<p>A similar but alternative method is to invoke a DNS request using nslookup to a server you control. The site <a href="https://www.canarytokens.org/">Canary tokens</a> is ideal for this kind of request as they will notify you if a connection is made.</p>
+
+<p>A (slightly) more subtle way of determining if a site is vulnerable to blind command injection is to redirect the output. If you have access via a web app then you are likely in a folder such as /var/www/html/ so by outputting the commands you wish to execute to a folder saved in this directory you should be able to view them on the server. If you were to inject ;ls &gt; ls.txt and then visit target.site/ls.txt, if it were vulnerable it would bring up the file which would list file names of all the pages in that directory giving you a slightly slower but still fully functional command injection. Just make sure you delete it after if you are trying to cover your tracks.</p>
+
+<h3>Escalation of OS Command Injection</h3>
+
+<p>As we have control of the system via command injection initial escalation is more for convenience over capability. Using the command injection to add a user, execute a reverse shell or bind a shell to a port is a more convenient way than submitting a new request each time. Especially if it is a blind injection. A list of useful reverse shell commands can be found on <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Pentest Monkey</a>. This will depend on the user you have control of and what they have the rights to do. In some cases www-data will be unable to execute these types of commands and in this case using wget or curl to download a web shell on to the system is a good alternative. There are plenty of php based pages that can be added to the html folder and then accessed allowing a more convenient way to execute commands on the system.</p>
+
+<p>I have started a document on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/RevOneLiners.txt">GitHub</a> that lists reverse shell one liners that can be used for a quick brute force against with a command injection to see if any of them result in a shell. the list has {IP} instead of an IP and {PORT} instead of a port. These can be replaced with your own with the sed command. syntax below for those who don’t know it.</p>
+
+<blockquote>
+  <p>sed -i ‘s/{IP}/192.168.1.1/g’ RevOneLiners.txt</p>
+</blockquote>
+
+<p>If it won’t allow any of these in this method then if you save one to a file with the correct IP and Port filled then request it with curl and pipe it to bash to execute it.</p>
+
+<h3>Bypassing Filters</h3>
+<p>Things are never easy and as such filters are often put in place to blacklist or whitelist certain types of inputs. There are of course ways around these types of things.
+A good list of bypasses and tricks can be found on <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection">payloads all the things</a>.</p>
+
+<p>I have created my own master list of command injection payloads with various filter bypasses and injection techniques. These can be found on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/CommandInjection.txt">GitHub</a>. I also have the linked <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/SpaceReplace.txt">page</a> that lists alternatives to the space for when it won’t process them. All the GitHub links are a work in progress and will be updated over time.</p>
+
+<h3>Examples in Hack The Box</h3>
+
+<p>For those wishing to practice command injection there are example on DVWA and Juice Shop as well as the below retired Hack the Box machines:</p>
+
+<ul>
+  <li>Chainsaw</li>
+  <li>Fortune</li>
+  <li>Holiday</li>
+  <li>Remediation</li>
+</ul>
+
+<p>The most obvious way to try to avoid command injection on your site is to not call any system commands from it, especially using user supplied input. If this is unavoidable then enforcing a white list of inputs and validating certain characters is a must.</p>
+
+<h3>Disclaimer</h3>
+
+<p>As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.</p>
+
+<h3>Conclusion</h3>
+
+<p>I hope this helps some people understand command injection a bit more. Any feedback or questions are welcome on my twitter below. I will be adding other OWASP top 10 vulnerability write ups in the future.</p>
+
+<p><img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to 0x221B</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/221b.png" alt="0x221B" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/0x221B">Jono</a></h4>
+                                
+                                    <p>Infosec Student</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/0x221B">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/welcome">
+                <div class="post-card-image" style="background-image: url(/assets/images/welcome.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/welcome">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Getting started</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Welcome to Ghost</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="http://localhost:4000/">
+            
+                <img src="/assets/images/favicon.png" alt="0x221B icon" />
+            
+            <span>0x221B</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">OWASP Top 10 OS Command Injection</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=OWASP+Top+10+OS+Command+Injection&amp;url=https://jekyller.github.io/jasper2/OWASP-Top-10-Command-Injection"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://jekyller.github.io/jasper2/OWASP-Top-10-Command-Injection"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:4000/">0x221B</a> &copy; 2020</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/JonoH904" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                    <img class="subscribe-overlay-logo" src="/assets/images/blog-icon.png" alt="0x221B" />
+                
+                <h1 class="subscribe-overlay-title">Subscribe to 0x221B</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69281367-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
