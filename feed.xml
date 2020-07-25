@@ -1,4 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-22T22:26:44+01:00</updated><id>http://localhost:4000/</id><title type="html">Baker Street</title><subtitle>Random infosec based ramblings from UK.</subtitle><entry><title type="html">OWASP Top 10 OS Command Injection</title><link href="http://localhost:4000/OWASP-Top-10-Command-Injection" rel="alternate" type="text/html" title="OWASP Top 10 OS Command Injection" /><published>2020-07-22T00:00:00+01:00</published><updated>2020-07-22T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-Command-Injection</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-25T16:51:21+01:00</updated><id>http://localhost:4000/</id><title type="html">Baker Street</title><subtitle>Random infosec based ramblings from UK.</subtitle><entry><title type="html">Ghostcat Vulnerability (CVE-2020-1938)</title><link href="http://localhost:4000/Ghostcat-Vulnerability" rel="alternate" type="text/html" title="Ghostcat Vulnerability (CVE-2020-1938)" /><published>2020-07-24T00:00:00+01:00</published><updated>2020-07-24T00:00:00+01:00</updated><id>http://localhost:4000/Ghostcat-Vulnerability</id><content type="html" xml:base="http://localhost:4000/Ghostcat-Vulnerability">&lt;p&gt;To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.&lt;/p&gt;
+
+&lt;h3&gt;Apache Tomcat&lt;/h3&gt;
+
+&lt;p&gt;Tomcat is an Open Source Apache web server written in Java. During its time it has seen its fair share of vulnerabilities. A quick search with searchsploit or on ExploitDB reveals a list of potential weaknesses if the latest version is not installed.&lt;/p&gt;
+
+&lt;h3&gt;Apache Jserv Protocol (AJP)&lt;/h3&gt;
+
+&lt;p&gt;AJP is a protocol that can proxy inbound requests through the web server into the application server behind it. Which already sounds really bad. To make matters worse within the system it has a lot of built in trust. This of course means that it should never be exposed to the internet. Docs on AJPv13 can be found &lt;a href=&quot;https://tomcat.apache.org/connectors-doc-archive/jk2/common/AJPv13.html&quot;&gt;here&lt;/a&gt;. Communication with the servlet is conducted by TCP and once a connection is assigned to a particular request, it will not be used for any others until the request-handling cycle has been terminated. By default this runs on port 8009 so if you see that on a Nmap scan you know what to look for.&lt;/p&gt;
+
+&lt;h3&gt;Ghostcat Vulnerability&lt;/h3&gt;
+
+&lt;p&gt;GhostCat is a local file inclusion (LFI) vulnerability present through the exploitation of the Apache Jserv Protocol. This means it can be exploited to read restricted web app files on the appserver. Where file uploads are allowed this can also lead to remote code execution (Assuming the documents are stored in the document root). It affects all unpatched versions of Apache Tomcat.&lt;/p&gt;
+
+&lt;h3&gt;POC&lt;/h3&gt;
+
+&lt;p&gt;For the POC I am using Tryhackme.com’s new room for the Ghostcat exploit. Rather than fighting with the AJP requests there is a simple tool that can be used to send the required data to exploit the LFI. The tool can be found &lt;a href=&quot;https://github.com/00theway/Ghostcat-CNVD-2020-10487/blob/master/ajpShooter.py&quot;&gt;here&lt;/a&gt;. In the following example we have found a Tomcat web server and after an Nmap scan we have found port 8009 to be open.&lt;/p&gt;
+
+&lt;p&gt;The LFI affects the Webapp server so some googling presents the default folders present in this file structure.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WEB-INF(d)(web.xml, classes(d), lib(d))&lt;/li&gt;
+  &lt;li&gt;index.jsp&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To look through what we have we can check all of these with our AJP shooter with the following command:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;python3 ajpShooter.py http://10.10.10.78:8080 8009 /WEB-INF/web.xml read&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In this instance this results in the reading of the restricted file web.xml that results in the information leak of a password.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/ajp.png&quot; alt=&quot;&amp;quot;AJP tool&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Remediation&lt;/h3&gt;
+
+&lt;p&gt;Tomcat have since fixed the issue so the best way to protect yourselves is to update!&lt;/p&gt;
+
+&lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;Copied from my old &lt;a href=&quot;https://testofpen.wordpress.com/2020/04/03/ghostcat-vulnerability-cve-2020-1938/&quot;&gt;blog&lt;/a&gt; published 3 April 2020.
+&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="CVE" /><summary type="html">To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.</summary></entry><entry><title type="html">OWASP Top 10 OS Command Injection</title><link href="http://localhost:4000/OWASP-Top-10-Command-Injection" rel="alternate" type="text/html" title="OWASP Top 10 OS Command Injection" /><published>2020-07-22T00:00:00+01:00</published><updated>2020-07-22T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-Command-Injection</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Injection&lt;/li&gt;
@@ -118,4 +160,7 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
 
 &lt;p&gt;I hope this helps some people understand command injection a bit more. Any feedback or questions are welcome on my twitter below. I will be adding other OWASP top 10 vulnerability write ups in the future.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="OWASP" /><summary type="html">I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found here.</summary></entry></feed>
+&lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;Copied from my old &lt;a href=&quot;https://testofpen.wordpress.com/&quot;&gt;blog&lt;/a&gt; published 6 June 2020.
+&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="OWASP" /><summary type="html">I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found here.</summary></entry></feed>

@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Ghostcat Vulnerability (CVE-2020-1938)</title>
+        
+          <description>&lt;p&gt;To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Fri, 24 Jul 2020 00:00:00 +0100</pubDate>
+        <link>
+        http://localhost:4000/Ghostcat-Vulnerability</link>
+        <guid isPermaLink="true">http://localhost:4000/Ghostcat-Vulnerability</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>OWASP Top 10 OS Command Injection</title>
         
           <description>&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;

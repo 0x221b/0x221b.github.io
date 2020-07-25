@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/owasp/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-07-22T22:26:44+01:00</updated>
+  <updated>2020-07-25T16:51:21+01:00</updated>
   <id>http://localhost:4000/tag/owasp/feed.xml</id>
 
   
@@ -157,7 +157,10 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
 
 &lt;p&gt;I hope this helps some people understand command injection a bit more. Any feedback or questions are welcome on my twitter below. I will be adding other OWASP top 10 vulnerability write ups in the future.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content>
+&lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;Copied from my old &lt;a href=&quot;https://testofpen.wordpress.com/&quot;&gt;blog&lt;/a&gt; published 6 June 2020.
+&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content>
 
       
       
