@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/author/0x221B/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-07-22T21:05:21+01:00</updated>
+  <updated>2020-07-22T22:26:44+01:00</updated>
   <id>http://localhost:4000/author/0x221B/feed.xml</id>
 
   
@@ -12,11 +12,11 @@
   
 
   
-    <title type="html">0x221B | </title>
+    <title type="html">Baker Street | </title>
   
 
   
-    <subtitle>Hacking Blog</subtitle>
+    <subtitle>Random infosec based ramblings from UK.</subtitle>
   
 
   
@@ -37,9 +37,7 @@
       <published>2020-07-22T00:00:00+01:00</published>
       <updated>2020-07-22T00:00:00+01:00</updated>
       <id>http://localhost:4000/OWASP-Top-10-Command-Injection</id>
-      <content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;h1&gt;OWASP Top 10: 1. Injection (OS Command Injection)&lt;/h1&gt;
-
-&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+      <content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Injection&lt;/li&gt;
@@ -168,7 +166,7 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
       
 
       <author>
-          <name>Jono</name>
+          <name>0x221B</name>
         
         
       </author>
@@ -180,7 +178,7 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
       
 
       
-        <summary type="html">OWASP Top 10: 1. Injection (OS Command Injection)</summary>
+        <summary type="html">I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found here.</summary>
       
 
       
