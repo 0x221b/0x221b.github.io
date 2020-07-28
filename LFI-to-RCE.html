@@ -11,7 +11,7 @@
 
 
 
-    <title>Ghostcat Vulnerability (CVE-2020-1938)</title>
+    <title>Finding, Exploiting and Escalating LFI</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="" />
     <link rel="shortcut icon" href="http://localhost:4000/assets/images/221b.png" type="image/png" />
-    <link rel="canonical" href="http://localhost:4000/Ghostcat-Vulnerability" />
+    <link rel="canonical" href="http://localhost:4000/LFI-to-RCE" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Hacker Street" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Ghostcat Vulnerability (CVE-2020-1938)" />
-    <meta property="og:description" content="To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move" />
-    <meta property="og:url" content="http://localhost:4000/Ghostcat-Vulnerability" />
-    <meta property="og:image" content="http://localhost:4000/assets/images/cat.png" />
+    <meta property="og:title" content="Finding, Exploiting and Escalating LFI" />
+    <meta property="og:description" content="Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be" />
+    <meta property="og:url" content="http://localhost:4000/LFI-to-RCE" />
+    <meta property="og:image" content="http://localhost:4000/assets/images/LFI-title.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2020-07-24T00:00:00+01:00" />
-    <meta property="article:modified_time" content="2020-07-24T00:00:00+01:00" />
-    <meta property="article:tag" content="Cve" />
+    <meta property="article:published_time" content="2020-07-26T00:00:00+01:00" />
+    <meta property="article:modified_time" content="2020-07-26T00:00:00+01:00" />
+    <meta property="article:tag" content="Web" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ghostcat Vulnerability (CVE-2020-1938)" />
-    <meta name="twitter:description" content="To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move" />
+    <meta name="twitter:title" content="Finding, Exploiting and Escalating LFI" />
+    <meta name="twitter:description" content="Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be" />
     <meta name="twitter:url" content="http://localhost:4000/" />
-    <meta name="twitter:image" content="http://localhost:4000/assets/images/cat.png" />
+    <meta name="twitter:image" content="http://localhost:4000/assets/images/LFI-title.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Hacker Street" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Cve" />
+    <meta name="twitter:data2" content="Web" />
     <meta name="twitter:site" content="@JonoH904" />
     <meta name="twitter:creator" content="@JonoH904" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Hacker Street",
         "logo": "http://localhost:4000/assets/images/Hstreet-small.png"
     },
-    "url": "http://localhost:4000/Ghostcat-Vulnerability",
+    "url": "http://localhost:4000/LFI-to-RCE",
     "image": {
         "@type": "ImageObject",
-        "url": "http://localhost:4000/assets/images/cat.png",
+        "url": "http://localhost:4000/assets/images/LFI-title.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:4000/Ghostcat-Vulnerability"
+        "@id": "http://localhost:4000/LFI-to-RCE"
     },
-    "description": "To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move"
+    "description": "Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Ghostcat Vulnerability (CVE-2020-1938)" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Finding, Exploiting and Escalating LFI" href="/feed.xml" />
 
 
 </head>
@@ -145,73 +145,116 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-cve post ">
+        <article class="post-full  tag-web post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="24 July 2020">24 July 2020</time>
+                    <time class="post-full-meta-date" datetime="26 July 2020">26 July 2020</time>
                     
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/cve/'>CVE</a>
+                               <a href='/tag/web/'>WEB</a>
                             
                         
                     
                 </section>
-                <h1 class="post-full-title">Ghostcat Vulnerability (CVE-2020-1938)</h1>
+                <h1 class="post-full-title">Finding, Exploiting and Escalating LFI</h1>
             </header>
 
             
-            <figure class="post-full-image" style="background-image: url(/assets/images/cat.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/images/LFI-title.png)">
             </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.</p>
+                    <p>Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be altered by the user. Then it is just a case of finding the right level of back tracks (../) to locate the files of interest.
+LFI is a useful vulnerability to find but if there are no interesting files on the server there isn’t much you can do with it. Or is there?</p>
 
-<h3>Apache Tomcat</h3>
+<p>The main reason I do these types of blogs is to get all my knowledge on a subject i can easily access when needed but hopefully they will help others if they get stuck as well.</p>
 
-<p>Tomcat is an Open Source Apache web server written in Java. During its time it has seen its fair share of vulnerabilities. A quick search with searchsploit or on ExploitDB reveals a list of potential weaknesses if the latest version is not installed.</p>
+<h2>Finding</h2>
 
-<h3>Apache Jserv Protocol (AJP)</h3>
+<p>The key to finding LFIs is to look for parameters in web requests that are interacting with files on the system. Some times developers are nice and call the parameter something like page or file which makes life a lot easier. Additionally, any parameter that has a file extension is a good place to have a poke around. Figure 1 shows the Damn Vulnerable Web Application (DVWA) LFI setup which obviously makes it easy for us with the parameter and even the file names to look for.</p>
 
-<p>AJP is a protocol that can proxy inbound requests through the web server into the application server behind it. Which already sounds really bad. To make matters worse within the system it has a lot of built in trust. This of course means that it should never be exposed to the internet. Docs on AJPv13 can be found <a href="https://tomcat.apache.org/connectors-doc-archive/jk2/common/AJPv13.html">here</a>. Communication with the servlet is conducted by TCP and once a connection is assigned to a particular request, it will not be used for any others until the request-handling cycle has been terminated. By default this runs on port 8009 so if you see that on a Nmap scan you know what to look for.</p>
+<p><img src="/assets/images/LFI-example-before.png" alt="&quot;DVWA&quot;" /></p>
 
-<h3>Ghostcat Vulnerability</h3>
+<p>Fig 1. DVWA set up for LFI vulnerability</p>
 
-<p>GhostCat is a local file inclusion (LFI) vulnerability present through the exploitation of the Apache Jserv Protocol. This means it can be exploited to read restricted web app files on the appserver. Where file uploads are allowed this can also lead to remote code execution (Assuming the documents are stored in the document root). It affects all unpatched versions of Apache Tomcat.</p>
+<h2>Exploiting</h2>
 
-<h3>POC</h3>
+<p>Once a good candidate is found we need a few pieces of information to be able to exploit it.</p>
 
-<p>For the POC I am using Tryhackme.com’s new room for the Ghostcat exploit. Rather than fighting with the AJP requests there is a simple tool that can be used to send the required data to exploit the LFI. The tool can be found <a href="https://github.com/00theway/Ghostcat-CNVD-2020-10487/blob/master/ajpShooter.py">here</a>. In the following example we have found a Tomcat web server and after an Nmap scan we have found port 8009 to be open.</p>
+<ol>
+  <li>The file we know exists on the system and will be able to read(eg. /etc/passwd on linux)</li>
+  <li>Our likely current working directory, or more specifically how far we are away from /</li>
+  <li>Any filters present</li>
+</ol>
 
-<p>The LFI affects the Webapp server so some googling presents the default folders present in this file structure.</p>
+<p>Although 1 is easy 2 and 3 will take a bit of experimentation. In our linux example its likely we are in /var/www/html but there could be a few folders between us and that. Also there is no guarantee this is the file structure especially if virtual hosting is being used.</p>
 
-<ul>
-  <li>WEB-INF(d)(web.xml, classes(d), lib(d))</li>
-  <li>index.jsp</li>
-</ul>
+<p>Looking again at DVWA for 1 we will use /etc/passwd as we know its a linux platform. for 2 and 3 we can run a simple wordlist through Burp intruder to see how far we are from the / directory and to see if any filters are in place. by combining two files from this <a href="https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/">GitHub repo</a> one with various encodings of ../../ (dot-slash-PathTraversal_and_LFI_pairing.txt) and one with a few encodings of /etc/passwd (simple-check.txt) we should be able to establish if its vulnerable.</p>
 
-<p>To look through what we have we can check all of these with our AJP shooter with the following command:</p>
+<p><img src="/assets/images/LFI-low.png" alt="&quot;DVWA&quot;" /></p>
 
-<blockquote>
-  <p>python3 ajpShooter.py http://10.10.10.78:8080 8009 /WEB-INF/web.xml read</p>
-</blockquote>
+<p>Fig 2. On Low security we can see that no encoding is needed and we are 5 directories away from /.</p>
 
-<p>In this instance this results in the reading of the restricted file web.xml that results in the information leak of a password.</p>
+<p><img src="/assets/images/LFI-med.png" alt="&quot;DVWA&quot;" /></p>
 
-<p><img src="assets/images/ajp.png" alt="&quot;AJP tool&quot;" /></p>
+<p>Fig 3. On Medium security a bit of encoding of the ../ is required for us to read the document.</p>
 
-<h3>Remediation</h3>
+<p><img src="/assets/images/LFI-high.png" alt="&quot;DVWA&quot;" /></p>
 
-<p>Tomcat have since fixed the issue so the best way to protect yourselves is to update!</p>
+<p>Fig 4. On High it is a bit different no real traversal is needed it just needs to have file:// prefixed to the begining og the file.</p>
 
-<p>Any comments or questions please contact me on twitter at the link at the top of the page.</p>
+<p>So we have established 1, 2 and 3 from above and we can read /etc/passwd. Now what…</p>
 
-<p>Copied from my old <a href="https://testofpen.wordpress.com/2020/04/03/ghostcat-vulnerability-cve-2020-1938/">blog</a> published 3 April 2020.
-<img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
+<h2>Escalating</h2>
+
+<h3>Interesting Files</h3>
+
+<p>So you have found an LFI vuln and have read /etc/passwd. But short of what users are on the system and a few limited details we dont know much. One of the main problems with LFI is that you don’t know what you don’t know. So there could be a file in the /opt directory with all the passwords in it but if you don’t know its name you cant go and get it easily with this vuln alone. There are a couple of ways to brute force for the obvious files of interest, assuming you know what OS your target is running (which you definitely should by this point).
+The first stop should be this <a href="https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI_InterestingFiles-NullByteAdded.txt">GitHub repo</a> as it includes a list of interesting linux based files to check for. You might get lucky and find a file with some juicy detail that lets you SSH into a box.
+This is also where you enumeration comes into play. If you know the exact OS the target is running and the software it has you can do some googling and make it more likely that you will be able to find the files you are looking for.</p>
+
+<p>To return to our DVWA example from earlier we can see that by running this wordlist through burp we can see if there any other files of interest on the system we can read.</p>
+
+<p><img src="/assets/images/LFI-files.png" alt="&quot;DVWA&quot;" /></p>
+
+<p>Fig 5. We already know the encoding and distances from / so we only need one wordlist this time.</p>
+
+<p>We get a few files (Anything not of size 3580, most others wont be accessible by www-data user unless the system is poorly configured) which help add a few bits to our enumeration notes but still along way from RCE, ok new plan…</p>
+
+<h3>Log and file poisoning</h3>
+
+<p>The main aim of this is to somehow get your chosen text onto the system somehow. Once you can get some code (like a php web shell) into a file you can then navigate to it with the LFI and have your very own reverse shell to play with.</p>
+
+<ol>
+  <li>Enumeration of any log files can show us if any of our inputs such as failed ssh connections, user agents, cookies etc are logged anywhere that we can manipulate to input our own php code. The <a href="https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI-LogFileCheck.txt">log files</a> and <a href="https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI-FD-check.txt">fd files</a>can be discovered from the same GitHub as earlier. The location of cookies etc will depend on the software and require a bit of research to know exactly where to look.</li>
+  <li>Any file upload utilities we can access.</li>
+  <li>Sending system emails to a user we can then read with the LFI.</li>
+</ol>
+
+<p>Once you know you can read these files its just a case of getting text into them. The method will depend on the file so a bit of research may be needed in order to find the correct method. That may be changing your user agent or attempting to log into SSH. then just insert the php code for web shell of you choice access it with the LFI and there you have it RCE over a web shell.</p>
+
+<h2>Automation</h2>
+
+<p>The most common tool for automation of LFI discovery is dotdotpwn which can be found on github or installed from the kali repository.</p>
+
+<h2>Disclaimer</h2>
+
+<p>As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.</p>
+
+<h2>Conclusion</h2>
+
+<p>Here we have covered a simple methodology for finding, exploiting and escalating LFI to RCE with nothing but Burp Suite and a few wordlists. Hope anyone who came across this article has found it useful.</p>
+
+<p>Anyone who wants to have a go on DVWA the easiest way I have found is to access it via the site <a href="https://tryhackme.com">TryHackMe</a> which has a DVWA room you can deploy and access in seconds.</p>
+
+<p>Any comments or questions please contact me on <a href="https://twitter.com/JonoH904">twitter</a>.</p>
+
+<p><img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
 
                 </div>
             </section>
@@ -277,58 +320,52 @@ into the {body} of the default.hbs template -->
                 
                 
                 
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/blog-cover.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; Hacker Street &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/web/">Web</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/OWASP-Top-10-Command-Injection">OWASP Top 10 OS Command Injection</a></li>
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/web/">
+                                
+                                    See all 1 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/LFI-to-RCE">
-                <div class="post-card-image" style="background-image: url(/assets/images/LFI-title.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/LFI-to-RCE">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Web</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Finding, Exploiting and Escalating LFI</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p></p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/221b.png" alt="0x221B" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/0x221B/">0x221B</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
@@ -337,26 +374,22 @@ into the {body} of the default.hbs template -->
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/OWASP-Top-10-Command-Injection">
-                <div class="post-card-image" style="background-image: url(/assets/images/pingid.png)"></div>
+            <a class="post-card-image-link" href="/Ghostcat-Vulnerability">
+                <div class="post-card-image" style="background-image: url(/assets/images/cat.png)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/OWASP-Top-10-Command-Injection">
+            <a class="post-card-content-link" href="/Ghostcat-Vulnerability">
                 <header class="post-card-header">
                     
                         
                             
-                               <span class="post-card-tags">Owasp</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Web</span>
+                                <span class="post-card-tags">Cve</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">OWASP Top 10 OS Command Injection</h2>
+                    <h2 class="post-card-title">Ghostcat Vulnerability (CVE-2020-1938)</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
@@ -402,18 +435,18 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Ghostcat Vulnerability (CVE-2020-1938)</div>
+    <div class="floating-header-title">Finding, Exploiting and Escalating LFI</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Ghostcat+Vulnerability+%28CVE-2020-1938%29&amp;url=https://0x221b.github.io/Ghostcat-Vulnerability"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Finding%2C+Exploiting+and+Escalating+LFI&amp;url=https://0x221b.github.io/LFI-to-RCE"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/Ghostcat-Vulnerability"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/LFI-to-RCE"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

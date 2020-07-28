@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/web/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-07-26T22:46:30+01:00</updated>
+  <updated>2020-07-28T15:18:00+01:00</updated>
   <id>http://localhost:4000/tag/web/feed.xml</id>
 
   
@@ -30,6 +30,125 @@
   
   
 
+  
+    <entry>
+      <title type="html">Finding, Exploiting and Escalating LFI</title>
+      <link href="http://localhost:4000/LFI-to-RCE" rel="alternate" type="text/html" title="Finding, Exploiting and Escalating LFI" />
+      <published>2020-07-26T00:00:00+01:00</published>
+      <updated>2020-07-26T00:00:00+01:00</updated>
+      <id>http://localhost:4000/LFI-to-RCE</id>
+      <content type="html" xml:base="http://localhost:4000/LFI-to-RCE">&lt;p&gt;Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be altered by the user. Then it is just a case of finding the right level of back tracks (../) to locate the files of interest.
+LFI is a useful vulnerability to find but if there are no interesting files on the server there isn’t much you can do with it. Or is there?&lt;/p&gt;
+
+&lt;p&gt;The main reason I do these types of blogs is to get all my knowledge on a subject i can easily access when needed but hopefully they will help others if they get stuck as well.&lt;/p&gt;
+
+&lt;h2&gt;Finding&lt;/h2&gt;
+
+&lt;p&gt;The key to finding LFIs is to look for parameters in web requests that are interacting with files on the system. Some times developers are nice and call the parameter something like page or file which makes life a lot easier. Additionally, any parameter that has a file extension is a good place to have a poke around. Figure 1 shows the Damn Vulnerable Web Application (DVWA) LFI setup which obviously makes it easy for us with the parameter and even the file names to look for.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/LFI-example-before.png&quot; alt=&quot;&amp;quot;DVWA&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fig 1. DVWA set up for LFI vulnerability&lt;/p&gt;
+
+&lt;h2&gt;Exploiting&lt;/h2&gt;
+
+&lt;p&gt;Once a good candidate is found we need a few pieces of information to be able to exploit it.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The file we know exists on the system and will be able to read(eg. /etc/passwd on linux)&lt;/li&gt;
+  &lt;li&gt;Our likely current working directory, or more specifically how far we are away from /&lt;/li&gt;
+  &lt;li&gt;Any filters present&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Although 1 is easy 2 and 3 will take a bit of experimentation. In our linux example its likely we are in /var/www/html but there could be a few folders between us and that. Also there is no guarantee this is the file structure especially if virtual hosting is being used.&lt;/p&gt;
+
+&lt;p&gt;Looking again at DVWA for 1 we will use /etc/passwd as we know its a linux platform. for 2 and 3 we can run a simple wordlist through Burp intruder to see how far we are from the / directory and to see if any filters are in place. by combining two files from this &lt;a href=&quot;https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/&quot;&gt;GitHub repo&lt;/a&gt; one with various encodings of ../../ (dot-slash-PathTraversal_and_LFI_pairing.txt) and one with a few encodings of /etc/passwd (simple-check.txt) we should be able to establish if its vulnerable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/LFI-low.png&quot; alt=&quot;&amp;quot;DVWA&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fig 2. On Low security we can see that no encoding is needed and we are 5 directories away from /.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/LFI-med.png&quot; alt=&quot;&amp;quot;DVWA&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fig 3. On Medium security a bit of encoding of the ../ is required for us to read the document.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/LFI-high.png&quot; alt=&quot;&amp;quot;DVWA&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fig 4. On High it is a bit different no real traversal is needed it just needs to have file:// prefixed to the begining og the file.&lt;/p&gt;
+
+&lt;p&gt;So we have established 1, 2 and 3 from above and we can read /etc/passwd. Now what…&lt;/p&gt;
+
+&lt;h2&gt;Escalating&lt;/h2&gt;
+
+&lt;h3&gt;Interesting Files&lt;/h3&gt;
+
+&lt;p&gt;So you have found an LFI vuln and have read /etc/passwd. But short of what users are on the system and a few limited details we dont know much. One of the main problems with LFI is that you don’t know what you don’t know. So there could be a file in the /opt directory with all the passwords in it but if you don’t know its name you cant go and get it easily with this vuln alone. There are a couple of ways to brute force for the obvious files of interest, assuming you know what OS your target is running (which you definitely should by this point).
+The first stop should be this &lt;a href=&quot;https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI_InterestingFiles-NullByteAdded.txt&quot;&gt;GitHub repo&lt;/a&gt; as it includes a list of interesting linux based files to check for. You might get lucky and find a file with some juicy detail that lets you SSH into a box.
+This is also where you enumeration comes into play. If you know the exact OS the target is running and the software it has you can do some googling and make it more likely that you will be able to find the files you are looking for.&lt;/p&gt;
+
+&lt;p&gt;To return to our DVWA example from earlier we can see that by running this wordlist through burp we can see if there any other files of interest on the system we can read.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/LFI-files.png&quot; alt=&quot;&amp;quot;DVWA&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fig 5. We already know the encoding and distances from / so we only need one wordlist this time.&lt;/p&gt;
+
+&lt;p&gt;We get a few files (Anything not of size 3580, most others wont be accessible by www-data user unless the system is poorly configured) which help add a few bits to our enumeration notes but still along way from RCE, ok new plan…&lt;/p&gt;
+
+&lt;h3&gt;Log and file poisoning&lt;/h3&gt;
+
+&lt;p&gt;The main aim of this is to somehow get your chosen text onto the system somehow. Once you can get some code (like a php web shell) into a file you can then navigate to it with the LFI and have your very own reverse shell to play with.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Enumeration of any log files can show us if any of our inputs such as failed ssh connections, user agents, cookies etc are logged anywhere that we can manipulate to input our own php code. The &lt;a href=&quot;https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI-LogFileCheck.txt&quot;&gt;log files&lt;/a&gt; and &lt;a href=&quot;https://github.com/tennc/fuzzdb/blob/master/dict/BURP-PayLoad/LFI/LFI-FD-check.txt&quot;&gt;fd files&lt;/a&gt;can be discovered from the same GitHub as earlier. The location of cookies etc will depend on the software and require a bit of research to know exactly where to look.&lt;/li&gt;
+  &lt;li&gt;Any file upload utilities we can access.&lt;/li&gt;
+  &lt;li&gt;Sending system emails to a user we can then read with the LFI.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once you know you can read these files its just a case of getting text into them. The method will depend on the file so a bit of research may be needed in order to find the correct method. That may be changing your user agent or attempting to log into SSH. then just insert the php code for web shell of you choice access it with the LFI and there you have it RCE over a web shell.&lt;/p&gt;
+
+&lt;h2&gt;Automation&lt;/h2&gt;
+
+&lt;p&gt;The most common tool for automation of LFI discovery is dotdotpwn which can be found on github or installed from the kali repository.&lt;/p&gt;
+
+&lt;h2&gt;Disclaimer&lt;/h2&gt;
+
+&lt;p&gt;As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Here we have covered a simple methodology for finding, exploiting and escalating LFI to RCE with nothing but Burp Suite and a few wordlists. Hope anyone who came across this article has found it useful.&lt;/p&gt;
+
+&lt;p&gt;Anyone who wants to have a go on DVWA the easiest way I have found is to access it via the site &lt;a href=&quot;https://tryhackme.com&quot;&gt;TryHackMe&lt;/a&gt; which has a DVWA room you can deploy and access in seconds.&lt;/p&gt;
+
+&lt;p&gt;Any comments or questions please contact me on &lt;a href=&quot;https://twitter.com/JonoH904&quot;&gt;twitter&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>0x221B</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Web" />
+      
+
+      
+        <summary type="html">Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be altered by the user. Then it is just a case of finding the right level of back tracks (../) to locate the files of interest. LFI is a useful vulnerability to find but if there are no interesting files on the server there isn’t much you can do with it. Or is there?</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">OWASP Top 10 OS Command Injection</title>

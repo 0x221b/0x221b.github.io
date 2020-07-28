@@ -8,6 +8,22 @@
     
       
       <item>
+        <title>Finding, Exploiting and Escalating LFI</title>
+        
+          <description>&lt;p&gt;Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be altered by the user. Then it is just a case of finding the right level of back tracks (../) to locate the files of interest.
+LFI is a useful vulnerability to find but if there are no interesting files on the server there isn’t much you can do with it. Or is there?&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sun, 26 Jul 2020 00:00:00 +0100</pubDate>
+        <link>
+        http://localhost:4000/LFI-to-RCE</link>
+        <guid isPermaLink="true">http://localhost:4000/LFI-to-RCE</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Ghostcat Vulnerability (CVE-2020-1938)</title>
         
           <description>&lt;p&gt;To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.&lt;/p&gt;
