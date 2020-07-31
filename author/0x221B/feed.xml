@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/author/0x221B/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-07-29T21:56:19+01:00</updated>
+  <updated>2020-07-31T16:07:35+01:00</updated>
   <id>http://localhost:4000/author/0x221B/feed.xml</id>
 
   
@@ -30,6 +30,146 @@
   
   
 
+  
+    <entry>
+      <title type="html">Hacking WebDAV with Granny and Grandpa</title>
+      <link href="http://localhost:4000/Webdav-with-Granny-and-Grandpa" rel="alternate" type="text/html" title="Hacking WebDAV with Granny and Grandpa" />
+      <published>2020-07-29T00:00:00+01:00</published>
+      <updated>2020-07-29T00:00:00+01:00</updated>
+      <id>http://localhost:4000/Webdav-with-Granny-and-Grandpa</id>
+      <content type="html" xml:base="http://localhost:4000/Webdav-with-Granny-and-Grandpa">&lt;p&gt;Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.&lt;/p&gt;
+
+&lt;p&gt;What could possibly go wrong…&lt;/p&gt;
+
+&lt;p&gt;For this article I will be using the retired Hack the Box machines Granny and Grandpa. These boxes are both retired but if you don’t want spoilers on how to do them don’t read any further.&lt;/p&gt;
+
+&lt;h2&gt;Webdav methods&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SEARCH - Allows searching of webDAV resources&lt;/li&gt;
+  &lt;li&gt;PROPFIND - retrieve properties from a resource&lt;/li&gt;
+  &lt;li&gt;PROPPATCH - modify properties&lt;/li&gt;
+  &lt;li&gt;MKCOL - create collections (directories, think mkdir)&lt;/li&gt;
+  &lt;li&gt;COPY - copy a resource&lt;/li&gt;
+  &lt;li&gt;MOVE - move a resource&lt;/li&gt;
+  &lt;li&gt;LOCK - Locks a resource to prevent editing&lt;/li&gt;
+  &lt;li&gt;UNLOCK - unlocks resource&lt;/li&gt;
+  &lt;li&gt;CHECKIN - version control&lt;/li&gt;
+  &lt;li&gt;CHECKOUT - version control&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Webdav hacking&lt;/h2&gt;
+
+&lt;h3&gt;Discovering WebDav&lt;/h3&gt;
+
+&lt;p&gt;If you are running an Nmap scan of a system with the -sC setting for safe scripts then it will scan for the presence of WebDAV by default. If it finds it you will get an output like in Fig 1.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/webDAV-nmap-sVC.png&quot; alt=&quot;WebDAV Nmap response&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 1. Nmap’s WebDAV scan results from GRANNY&lt;/p&gt;
+
+&lt;p&gt;This scan also lists all the methods avialble to us including the additional features of WebDAV. Similar information can be gleaned from a simple OPTIONS request to the web server as shown in Fig 2.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/webDAV-OPTIONS.png&quot; alt=&quot;WebDAV OPTIONS response&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 2. OPTIONS request using BurpSuite showing allowed methods on GRANNY&lt;/p&gt;
+
+&lt;h3&gt;Exploitation&lt;/h3&gt;
+
+&lt;p&gt;Now we have established which methods we can use we know what we have to play with. Lets look at the interesting ones.&lt;/p&gt;
+
+&lt;h4&gt;MOVE&lt;/h4&gt;
+
+&lt;p&gt;The MOVE method is the same as it is on linux (mv) we are able to move a file from one place to another or rename it in place. This is interesting in a similar way to my previous article on LFI, in that if we can somehow get text onto the system that we can access over the web with a file upload etc we can change it from a txt file to a php for example and get code execution.&lt;/p&gt;
+
+&lt;p&gt;This is where the PUT HTTP method comes to help us. If PUT is allowed which would make sense on this kind of server it gets rid of the usual problem with file uploads where you have to bypass various filters on the file extension. With this we can PUT a txt file and MOVE it to create an executable. Then all we have to do is visit the page and we have RCE.&lt;/p&gt;
+
+&lt;p&gt;As with file uploads the first step is to assess which file types we are allowed to upload. This can be achieved with BurpSuite and a file extension list. If you don’t have one I have a list on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Extensions.txt&quot;&gt;GitHub&lt;/a&gt;. Attempt to upload a txt document and then in intruder highlight the file extension and sniper it with my wordlist.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/PUT-extensions.png&quot; alt=&quot;Permitted PUT extensions&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 3. Burp Intruder showing permitted extensions on GRANNY&lt;/p&gt;
+
+&lt;p&gt;Now we know we are limited by all the interesting file extensions but thanks to the MOVE command being available we are able to upload a text file containing a web shell etc and then convert it to a .aspx file in order to execute it.
+And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say. The process can be seen in more detail in the following images&lt;/p&gt;
+
+&lt;p&gt;This example uses code for an aspx rev shell using the standard kali one but a metasploit one can be made with msfvenom for a full reverse shell&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/PUT-req.png&quot; alt=&quot;PUT request of txt doc&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 4. PUT txt file containing&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/txt-doc.png&quot; alt=&quot;Upload check&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 5. Check the file has uploaded successfully&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/MOVE-req.png&quot; alt=&quot;MOVE request to .aspx&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 6. MOVE request to convert txt to aspx&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/aspx-shell.png&quot; alt=&quot;ASPX shell&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 7. aspx web shell as nt authority\network service&lt;/p&gt;
+
+&lt;p&gt;A lot of this work can be automated with the davtest tool as can be seen below in Fig 8.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/davtest.png&quot; alt=&quot;davtest tool running against GRANNY&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 8. Davtest tool&lt;/p&gt;
+
+&lt;p&gt;Of course you can also cheat and just use ​iis_webdav_upload_asp Metasploit module instead.&lt;/p&gt;
+
+&lt;h4&gt;PROPFIND&lt;/h4&gt;
+
+&lt;p&gt;CVE-2017-7269 affects the PROPFIND method on certain releases. In Figure 9 below the exploit can be seen being run from Metasploit to get a meterpreter shell.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/PROPFIND.png&quot; alt=&quot;PROPFIND rev shell&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 9. Reverse shell with PROPFIND exploit using Metasploit on GRANNY&lt;/p&gt;
+
+&lt;h3&gt;Disclaimer&lt;/h3&gt;
+
+&lt;p&gt;As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;This article is a quick exploration of what it is possible to do if you find WebDAV running on a web server. Although less likely these days. To help illustrate this we have mainly used the GRANNY machine from Hack the Box. The reason I havent included too much from GRANDPA is because you get basically the same result but all good for practice.&lt;/p&gt;
+
+&lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;I am currently transfering some pages from my old &lt;a href=&quot;https://testofpen.wordpress.com/&quot;&gt;blog&lt;/a&gt;, visit there for more content in the mean time.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>0x221B</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Networking" />
+      
+        <category term="HTB" />
+      
+        <category term="Web" />
+      
+
+      
+        <summary type="html">Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Finding, Exploiting and Escalating LFI</title>

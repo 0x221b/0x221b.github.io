@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Hacking WebDAV with Granny and Grandpa</title>
+        
+          <description>&lt;p&gt;Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 29 Jul 2020 00:00:00 +0100</pubDate>
+        <link>
+        http://localhost:4000/Webdav-with-Granny-and-Grandpa</link>
+        <guid isPermaLink="true">http://localhost:4000/Webdav-with-Granny-and-Grandpa</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Finding, Exploiting and Escalating LFI</title>
         
           <description>&lt;p&gt;Local File Inclusion or LFI is a vulnerability in web applications where input can be manipulated to read other files on the system that were not intented to be read by the web server. It occurs when the application accesses a file on the system using input that can be altered by the user. Then it is just a case of finding the right level of back tracks (../) to locate the files of interest.
