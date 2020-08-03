@@ -182,6 +182,8 @@ LFI is a useful vulnerability to find but if there are no interesting files on t
 
 <p>Fig 1. DVWA set up for LFI vulnerability</p>
 
+<p>I have included a list of common vulnerable params on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/LFI/params.txt">Github</a>.</p>
+
 <h2>Exploiting</h2>
 
 <p>Once a good candidate is found we need a few pieces of information to be able to exploit it.</p>
@@ -225,6 +227,8 @@ This is also where you enumeration comes into play. If you know the exact OS the
 <p>Fig 5. We already know the encoding and distances from / so we only need one wordlist this time.</p>
 
 <p>We get a few files (Anything not of size 3580, most others wont be accessible by www-data user unless the system is poorly configured) which help add a few bits to our enumeration notes but still along way from RCE, ok new plan…</p>
+
+<p>Once you have learned the users names it is always worth checking /home/username/.ssh/id_rsa to get their private key and use that to ssh onto the system. Failing that you can also check for bash_history etc as you might get lucky on passwords.</p>
 
 <h3>Log and file poisoning</h3>
 
@@ -341,6 +345,15 @@ This is also where you enumeration comes into play. If you know the exact OS the
                                     
                                         
                                         
+                                            <li><a href="/OWASP-Top-10-XXE">OWASP Top 10 XXE (or taking liberties with acronyms)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
                                             <li><a href="/Webdav-with-Granny-and-Grandpa">Hacking WebDAV with Granny and Grandpa</a></li>
                                         
                                     
@@ -366,7 +379,7 @@ This is also where you enumeration comes into play. If you know the exact OS the
                         <footer class="read-next-card-footer">
                             <a href="/tag/web/">
                                 
-                                    See all 2 posts  →
+                                    See all 3 posts  →
                                 
                             </a>
                         </footer>

@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>OWASP Top 10 XXE (or taking liberties with acronyms)</title>
+        
+          <description>&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 01 Aug 2020 00:00:00 +0100</pubDate>
+        <link>
+        http://localhost:4000/OWASP-Top-10-XXE</link>
+        <guid isPermaLink="true">http://localhost:4000/OWASP-Top-10-XXE</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Hacking WebDAV with Granny and Grandpa</title>
         
           <description>&lt;p&gt;Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.&lt;/p&gt;

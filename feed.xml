@@ -1,4 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-31T16:10:47+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">Hacking WebDAV with Granny and Grandpa</title><link href="http://localhost:4000/Webdav-with-Granny-and-Grandpa" rel="alternate" type="text/html" title="Hacking WebDAV with Granny and Grandpa" /><published>2020-07-29T00:00:00+01:00</published><updated>2020-07-29T00:00:00+01:00</updated><id>http://localhost:4000/Webdav-with-Granny-and-Grandpa</id><content type="html" xml:base="http://localhost:4000/Webdav-with-Granny-and-Grandpa">&lt;p&gt;Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-03T18:31:14+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">OWASP Top 10 XXE (or taking liberties with acronyms)</title><link href="http://localhost:4000/OWASP-Top-10-XXE" rel="alternate" type="text/html" title="OWASP Top 10 XXE (or taking liberties with acronyms)" /><published>2020-08-01T00:00:00+01:00</published><updated>2020-08-01T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-XXE</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-XXE">&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Injection&lt;/li&gt;
+  &lt;li&gt;Broken Authentication&lt;/li&gt;
+  &lt;li&gt;Sensitive Data Exposure&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;XXE&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;Broken Access Control&lt;/li&gt;
+  &lt;li&gt;Security Misconfiguration&lt;/li&gt;
+  &lt;li&gt;XSS&lt;/li&gt;
+  &lt;li&gt;Insecure Deserialisation&lt;/li&gt;
+  &lt;li&gt;Using Components With Known Vulnerabilities&lt;/li&gt;
+  &lt;li&gt;Insufficient Logging and Monitoring&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This post is going to focus on number 4 on the list XML External Entity more commonly known as XXE.&lt;/p&gt;
+
+&lt;h2&gt;XXE&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Impact:&lt;/strong&gt; 8          &lt;strong&gt;Risk:&lt;/strong&gt; 7          &lt;strong&gt;Difficulty:&lt;/strong&gt; 3&lt;/p&gt;
+
+&lt;h3&gt;So what is an XXE?&lt;/h3&gt;
+
+&lt;p&gt;XXE is a little inceptionesque when it comes to naming. XXE stands for XML External Entity but the acronym within the acronym XML stands for Extensible Markup Language. Apart from playing fast and loose with E’s and X’s in acronyms its pretty obvious even to the most technophobic of readers that as it suggests XML is a mark up language.&lt;/p&gt;
+
+&lt;p&gt;XML uses tags like HTML only instead of boring h2s and ps the tags are user defined. Anyway you can all look in wikipedia so i think we have reached the recommended daily dose of what XML does except to say that it is a language that web sites use to structure the information they hold.&lt;/p&gt;
+
+&lt;p&gt;An XML Entity is an way of representing data within an XML document a bit like a placeholder for information and an external one of those uses an entity from outside the document type definition.&lt;/p&gt;
+
+&lt;p&gt;An example of an XML document can be seen below in Figure 1.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/xml-example.png&quot; alt=&quot;XML example - Figure 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.&lt;/p&gt;
+
+&lt;h3&gt;How do I find XXE?&lt;/h3&gt;
+
+&lt;p&gt;XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.&lt;/p&gt;
+
+&lt;p&gt;Keep an eye out for Content-Type: application/xml in requests.&lt;/p&gt;
+
+&lt;h3&gt;Types of XXE&lt;/h3&gt;
+
+&lt;p&gt;Four types of XXE attack are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;XXE with LFI&lt;/li&gt;
+  &lt;li&gt;XXE with SSRF&lt;/li&gt;
+  &lt;li&gt;XXE to exfiltrate data out of band&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To cover each of these we will work through the labs available on PortSwiggers Web Academy.&lt;/p&gt;
+
+&lt;h4&gt;XXE with LFI&lt;/h4&gt;
+
+&lt;p&gt;The Web academy sets up a simple site that uses XML documents to check stock levels. Figure 2 shows the intended request and response in Burp Suite.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/XXE-LFI-req.png&quot; alt=&quot;XXE with LFI intended request - Figure 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figure 2 shows the altered request and the reponse showing the details of the requested file.&lt;/p&gt;
+
+&lt;p&gt;To come back to explanation of an XXE the external entity is the &amp;amp;xxe that is defined and then called later on in the document and thus injected into the server.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/XXE-LFI-exploit.png&quot; alt=&quot;XXE with LFI exploit - Figure 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With the addition of the line DOCTYPE line to declare the xxe external entity and then calling it in the product id it responds with the requested file. From there follow the instructions in my &lt;a href=&quot;https://0x221b.github.io/LFI-to-RCE&quot;&gt;LFI&lt;/a&gt; to find interesting files and see if you can escalate.&lt;/p&gt;
+
+&lt;h4&gt;XXE with SSRF&lt;/h4&gt;
+
+&lt;p&gt;This time the same site can be exploited by adding the following http request in place of the file.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/XXE-SSRF.png&quot; alt=&quot;XXE with SSRF - Figure 4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With this you are able to access another mahcine on the network (SSRF article coming soon) or your own malicious site to extract files from the server if the way above doesnt work.&lt;/p&gt;
+
+&lt;h4&gt;XXE - Blind&lt;/h4&gt;
+
+&lt;p&gt;If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.&lt;/p&gt;
+
+&lt;h3&gt;Payloads&lt;/h3&gt;
+
+&lt;p&gt;A list of all the XXE payloads you could possibly want are available on payloads all the things &lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Examples in Hack The Box&lt;/h3&gt;
+
+&lt;p&gt;For those wishing to practice XXE there are example on DVWA and Juice Shop as well as the below retired Hack the Box machines:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Aragog&lt;/li&gt;
+  &lt;li&gt;Fulcrum&lt;/li&gt;
+  &lt;li&gt;DevOOPs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Prevention&lt;/h3&gt;
+
+&lt;p&gt;Disable any unused XML parsing features that could be used by attackers to run XXE in particular resolution of external entities and support for XInclude&lt;/p&gt;
+
+&lt;h3&gt;Disclaimer&lt;/h3&gt;
+
+&lt;p&gt;As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;This has been a brief over view of how to find and exploit XXE. The combination of the Web Academy and Hack the Box should be sufficient to get your head around this topic and then its just a case of expanding this to bigger documents in the wild. Check back from time to time as I will be adding new content to this page and others as I discover more things. XXEs most commonly result in the ability to read files on the system which can potentially be escalated or to connect to internal networks and services or an external malicious host.&lt;/p&gt;
+
+&lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="OWASP" /><category term="Web" /><summary type="html">As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.</summary></entry><entry><title type="html">Hacking WebDAV with Granny and Grandpa</title><link href="http://localhost:4000/Webdav-with-Granny-and-Grandpa" rel="alternate" type="text/html" title="Hacking WebDAV with Granny and Grandpa" /><published>2020-07-29T00:00:00+01:00</published><updated>2020-07-29T00:00:00+01:00</updated><id>http://localhost:4000/Webdav-with-Granny-and-Grandpa</id><content type="html" xml:base="http://localhost:4000/Webdav-with-Granny-and-Grandpa">&lt;p&gt;Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.&lt;/p&gt;
 
 &lt;p&gt;What could possibly go wrong…&lt;/p&gt;
 
@@ -113,6 +220,8 @@ LFI is a useful vulnerability to find but if there are no interesting files on t
 
 &lt;p&gt;Fig 1. DVWA set up for LFI vulnerability&lt;/p&gt;
 
+&lt;p&gt;I have included a list of common vulnerable params on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/LFI/params.txt&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
 &lt;h2&gt;Exploiting&lt;/h2&gt;
 
 &lt;p&gt;Once a good candidate is found we need a few pieces of information to be able to exploit it.&lt;/p&gt;
@@ -156,6 +265,8 @@ This is also where you enumeration comes into play. If you know the exact OS the
 &lt;p&gt;Fig 5. We already know the encoding and distances from / so we only need one wordlist this time.&lt;/p&gt;
 
 &lt;p&gt;We get a few files (Anything not of size 3580, most others wont be accessible by www-data user unless the system is poorly configured) which help add a few bits to our enumeration notes but still along way from RCE, ok new plan…&lt;/p&gt;
+
+&lt;p&gt;Once you have learned the users names it is always worth checking /home/username/.ssh/id_rsa to get their private key and use that to ssh onto the system. Failing that you can also check for bash_history etc as you might get lucky on passwords.&lt;/p&gt;
 
 &lt;h3&gt;Log and file poisoning&lt;/h3&gt;
 
@@ -230,7 +341,7 @@ This is also where you enumeration comes into play. If you know the exact OS the
 &lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="CVE" /><summary type="html">To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.</summary></entry><entry><title type="html">OWASP Top 10 OS Command Injection</title><link href="http://localhost:4000/OWASP-Top-10-Command-Injection" rel="alternate" type="text/html" title="OWASP Top 10 OS Command Injection" /><published>2020-07-22T00:00:00+01:00</published><updated>2020-07-22T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-Command-Injection</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Injection&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Injection&lt;/b&gt;&lt;/li&gt;
   &lt;li&gt;Broken Authentication&lt;/li&gt;
   &lt;li&gt;Sensitive Data Exposure&lt;/li&gt;
   &lt;li&gt;XXE&lt;/li&gt;
@@ -324,7 +435,7 @@ This is also where you enumeration comes into play. If you know the exact OS the
 &lt;p&gt;Things are never easy and as such filters are often put in place to blacklist or whitelist certain types of inputs. There are of course ways around these types of things.
 A good list of bypasses and tricks can be found on &lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection&quot;&gt;payloads all the things&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;I have created my own master list of command injection payloads with various filter bypasses and injection techniques. These can be found on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/CommandInjection.txt&quot;&gt;GitHub&lt;/a&gt;. I also have the linked &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/SpaceReplace.txt&quot;&gt;page&lt;/a&gt; that lists alternatives to the space for when it won’t process them. All the GitHub links are a work in progress and will be updated over time.&lt;/p&gt;
+&lt;p&gt;I have created my own master list of command injection payloads with various filter bypasses and injection techniques. These can be found on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/Command-Injection/CommandInjection.txt&quot;&gt;GitHub&lt;/a&gt;. I also have the linked &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/SpaceReplace.txt&quot;&gt;page&lt;/a&gt; that lists alternatives to the space for when it won’t process them. All the GitHub links are a work in progress and will be updated over time.&lt;/p&gt;
 
 &lt;h3&gt;Examples in Hack The Box&lt;/h3&gt;
 
@@ -345,7 +456,7 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
 
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 
-&lt;p&gt;I hope this helps some people understand command injection a bit more. Any feedback or questions are welcome on my twitter below. I will be adding other OWASP top 10 vulnerability write ups in the future.&lt;/p&gt;
+&lt;p&gt;I hope this helps some people understand command injection a bit more. I will be adding other OWASP top 10 vulnerability write ups in the future.&lt;/p&gt;
 
 &lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
 
