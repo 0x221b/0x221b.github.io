@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-03T20:33:43+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">OWASP Top 10 XXE (or taking liberties with acronyms)</title><link href="http://localhost:4000/OWASP-Top-10-XXE" rel="alternate" type="text/html" title="OWASP Top 10 XXE (or taking liberties with acronyms)" /><published>2020-08-01T00:00:00+01:00</published><updated>2020-08-01T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-XXE</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-XXE">&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-04T15:12:19+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">OWASP Top 10 XXE (or taking liberties with acronyms)</title><link href="http://localhost:4000/OWASP-Top-10-XXE" rel="alternate" type="text/html" title="OWASP Top 10 XXE (or taking liberties with acronyms)" /><published>2020-08-01T00:00:00+01:00</published><updated>2020-08-01T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-XXE</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-XXE">&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Injection&lt;/li&gt;
@@ -33,17 +33,9 @@
 
 &lt;p&gt;An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.&lt;/p&gt;
 
-&lt;h3&gt;How do I find XXE?&lt;/h3&gt;
-
-&lt;p&gt;XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.&lt;/p&gt;
-
-&lt;p&gt;Keep an eye out for Content-Type: application/xml in requests.&lt;/p&gt;
-
-&lt;p&gt;But everything is JSON these days, well its still possible to convert the JSON to XML and attempt the exploit. Convert with an &lt;a href=&quot;https://www.convertjson.com/json-to-xml.htm&quot;&gt;online tool&lt;/a&gt; and change the content type to the above and it might sneak through. For more details on this, see this great &lt;a href=&quot;https://blog.netspi.com/playing-content-type-xxe-json-endpoints/&quot;&gt;article&lt;/a&gt;&lt;/p&gt;
-
 &lt;h3&gt;Types of XXE&lt;/h3&gt;
 
-&lt;p&gt;Four types of XXE attack are:&lt;/p&gt;
+&lt;p&gt;Types of XXE attack are:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;XXE with LFI&lt;/li&gt;
@@ -78,6 +70,18 @@
 &lt;h4&gt;XXE - Blind&lt;/h4&gt;
 
 &lt;p&gt;If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.&lt;/p&gt;
+
+&lt;h3&gt;How do I find XXE?&lt;/h3&gt;
+
+&lt;p&gt;XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.&lt;/p&gt;
+
+&lt;p&gt;Keep an eye out for Content-Type: application/xml in requests.&lt;/p&gt;
+
+&lt;p&gt;But everything is JSON these days, well its still possible to convert the JSON to XML and attempt the exploit. Convert with an &lt;a href=&quot;https://www.convertjson.com/json-to-xml.htm&quot;&gt;online tool&lt;/a&gt; and change the content type to the above and it might sneak through. For more details on this, see this great &lt;a href=&quot;https://blog.netspi.com/playing-content-type-xxe-json-endpoints/&quot;&gt;article&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Another place to look for XXE is in File Uploads. If you cant manage to upload a reverse shell sometimes these file uploads accept XML documents. The example below is from Hack The Box DevOops and shows an LFI being executed through an XML file upload.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/devoops.png&quot; alt=&quot;DevOops example&quot; /&gt;&lt;/p&gt;
 
 &lt;h3&gt;Payloads&lt;/h3&gt;
 

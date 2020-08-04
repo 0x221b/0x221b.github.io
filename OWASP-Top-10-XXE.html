@@ -208,17 +208,9 @@ into the {body} of the default.hbs template -->
 
 <p>An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.</p>
 
-<h3>How do I find XXE?</h3>
-
-<p>XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.</p>
-
-<p>Keep an eye out for Content-Type: application/xml in requests.</p>
-
-<p>But everything is JSON these days, well its still possible to convert the JSON to XML and attempt the exploit. Convert with an <a href="https://www.convertjson.com/json-to-xml.htm">online tool</a> and change the content type to the above and it might sneak through. For more details on this, see this great <a href="https://blog.netspi.com/playing-content-type-xxe-json-endpoints/">article</a></p>
-
 <h3>Types of XXE</h3>
 
-<p>Four types of XXE attack are:</p>
+<p>Types of XXE attack are:</p>
 
 <ul>
   <li>XXE with LFI</li>
@@ -253,6 +245,18 @@ into the {body} of the default.hbs template -->
 <h4>XXE - Blind</h4>
 
 <p>If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.</p>
+
+<h3>How do I find XXE?</h3>
+
+<p>XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.</p>
+
+<p>Keep an eye out for Content-Type: application/xml in requests.</p>
+
+<p>But everything is JSON these days, well its still possible to convert the JSON to XML and attempt the exploit. Convert with an <a href="https://www.convertjson.com/json-to-xml.htm">online tool</a> and change the content type to the above and it might sneak through. For more details on this, see this great <a href="https://blog.netspi.com/playing-content-type-xxe-json-endpoints/">article</a></p>
+
+<p>Another place to look for XXE is in File Uploads. If you cant manage to upload a reverse shell sometimes these file uploads accept XML documents. The example below is from Hack The Box DevOops and shows an LFI being executed through an XML file upload.</p>
+
+<p><img src="assets/images/devoops.png" alt="DevOops example" /></p>
 
 <h3>Payloads</h3>
 
