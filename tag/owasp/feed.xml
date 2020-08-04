@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/owasp/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-08-04T15:12:19+01:00</updated>
+  <updated>2020-08-04T15:20:44+01:00</updated>
   <id>http://localhost:4000/tag/owasp/feed.xml</id>
 
   
@@ -72,6 +72,8 @@
 
 &lt;p&gt;An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.&lt;/p&gt;
 
+&lt;p&gt;Pre-warning - this article contains spoliers for the Wb Academy’s XXE labs and Hack the Box retired DevOops box.&lt;/p&gt;
+
 &lt;h3&gt;Types of XXE&lt;/h3&gt;
 
 &lt;p&gt;Types of XXE attack are:&lt;/p&gt;
@@ -121,6 +123,10 @@
 &lt;p&gt;Another place to look for XXE is in File Uploads. If you cant manage to upload a reverse shell sometimes these file uploads accept XML documents. The example below is from Hack The Box DevOops and shows an LFI being executed through an XML file upload.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/devoops.png&quot; alt=&quot;DevOops example&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we know the users on the system and their home directories we can check for SSH keys as seen below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/devoops-ssh.png&quot; alt=&quot;SSH key&quot; /&gt;&lt;/p&gt;
 
 &lt;h3&gt;Payloads&lt;/h3&gt;
 

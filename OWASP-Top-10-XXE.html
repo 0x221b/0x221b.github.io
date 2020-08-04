@@ -208,6 +208,8 @@ into the {body} of the default.hbs template -->
 
 <p>An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.</p>
 
+<p>Pre-warning - this article contains spoliers for the Wb Academy’s XXE labs and Hack the Box retired DevOops box.</p>
+
 <h3>Types of XXE</h3>
 
 <p>Types of XXE attack are:</p>
@@ -257,6 +259,10 @@ into the {body} of the default.hbs template -->
 <p>Another place to look for XXE is in File Uploads. If you cant manage to upload a reverse shell sometimes these file uploads accept XML documents. The example below is from Hack The Box DevOops and shows an LFI being executed through an XML file upload.</p>
 
 <p><img src="assets/images/devoops.png" alt="DevOops example" /></p>
+
+<p>Now we know the users on the system and their home directories we can check for SSH keys as seen below.</p>
+
+<p><img src="assets/images/devoops-ssh.png" alt="SSH key" /></p>
 
 <h3>Payloads</h3>
 
