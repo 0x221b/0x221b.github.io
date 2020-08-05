@@ -200,15 +200,15 @@ into the {body} of the default.hbs template -->
 
 <p>XML uses tags like HTML only instead of boring h2s and ps the tags are user defined. Anyway you can all look in wikipedia so i think we have reached the recommended daily dose of what XML does except to say that it is a language that web sites use to structure the information they hold.</p>
 
-<p>An XML Entity is an way of representing data within an XML document a bit like a placeholder for information and an external one of those uses an entity from outside the document type definition.</p>
-
 <p>An example of an XML document can be seen below in Figure 1.</p>
 
 <p><img src="assets/images/xml-example.png" alt="XML example - Figure 1" /></p>
 
-<p>An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.</p>
+<p>To understand XXE you must first understand Document Type Definition (DTD) files. These define the structure of the XML file. DTD files can be internal or external, that is they can be defined within the XML file or reference one at a given external location.</p>
 
-<p>Pre-warning - this article contains spoliers for the Wb Academy’s XXE labs and Hack the Box retired DevOops box.</p>
+<p>DTDs hold entities and the entities can call system commands. And there in lies our vulnerability. This means that by injecting into an XML document you can change what the system call does. For example we can make the XML ask to provide information from the server or connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.</p>
+
+<p>Pre-warning - this article contains spoliers for the Portswigger’s Web Academy’s XXE labs and Hack the Box retired DevOops box.</p>
 
 <h3>Types of XXE</h3>
 
@@ -244,9 +244,23 @@ into the {body} of the default.hbs template -->
 
 <p>With this you are able to access another mahcine on the network (SSRF article coming soon) or your own malicious site to extract files from the server if the way above doesnt work.</p>
 
-<h4>XXE - Blind</h4>
-
 <p>If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.</p>
+
+<h4>OOB</h4>
+
+<p>For this we need to define an external DTD in order for the exploit to work. The first part of the image below is the external DTD that you host on your attacking system and the second part s the request you send to your target.</p>
+
+<p><img src="assets/images/OOB.png" alt="OOB req" /></p>
+
+<p>The attack follows the following stages:</p>
+
+<ul>
+  <li>POST request with the above body sent to the target server</li>
+  <li>If vulnerable the XML in the requests instructs the server to access the attacker-webserver to request the external DTD which it sends back to the target server</li>
+  <li>GET request with appended requested /etc/passwd file sent to the attacker-webserver which can be found in the logs.</li>
+</ul>
+
+<p>These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required.</p>
 
 <h3>How do I find XXE?</h3>
 

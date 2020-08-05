@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/owasp/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-08-04T15:20:44+01:00</updated>
+  <updated>2020-08-05T14:58:09+01:00</updated>
   <id>http://localhost:4000/tag/owasp/feed.xml</id>
 
   
@@ -64,15 +64,15 @@
 
 &lt;p&gt;XML uses tags like HTML only instead of boring h2s and ps the tags are user defined. Anyway you can all look in wikipedia so i think we have reached the recommended daily dose of what XML does except to say that it is a language that web sites use to structure the information they hold.&lt;/p&gt;
 
-&lt;p&gt;An XML Entity is an way of representing data within an XML document a bit like a placeholder for information and an external one of those uses an entity from outside the document type definition.&lt;/p&gt;
-
 &lt;p&gt;An example of an XML document can be seen below in Figure 1.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/xml-example.png&quot; alt=&quot;XML example - Figure 1&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;An XXE takes advantage of this reliance on XML to transfer information from the application to the server and attackers can play around with exactly how the site processes it. As with most user provided data we can make it request something that wasnt intended. In this case we can make the XML ask to provide information from the server or indeed to connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.&lt;/p&gt;
+&lt;p&gt;To understand XXE you must first understand Document Type Definition (DTD) files. These define the structure of the XML file. DTD files can be internal or external, that is they can be defined within the XML file or reference one at a given external location.&lt;/p&gt;
 
-&lt;p&gt;Pre-warning - this article contains spoliers for the Wb Academy’s XXE labs and Hack the Box retired DevOops box.&lt;/p&gt;
+&lt;p&gt;DTDs hold entities and the entities can call system commands. And there in lies our vulnerability. This means that by injecting into an XML document you can change what the system call does. For example we can make the XML ask to provide information from the server or connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.&lt;/p&gt;
+
+&lt;p&gt;Pre-warning - this article contains spoliers for the Portswigger’s Web Academy’s XXE labs and Hack the Box retired DevOops box.&lt;/p&gt;
 
 &lt;h3&gt;Types of XXE&lt;/h3&gt;
 
@@ -108,9 +108,23 @@
 
 &lt;p&gt;With this you are able to access another mahcine on the network (SSRF article coming soon) or your own malicious site to extract files from the server if the way above doesnt work.&lt;/p&gt;
 
-&lt;h4&gt;XXE - Blind&lt;/h4&gt;
-
 &lt;p&gt;If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.&lt;/p&gt;
+
+&lt;h4&gt;OOB&lt;/h4&gt;
+
+&lt;p&gt;For this we need to define an external DTD in order for the exploit to work. The first part of the image below is the external DTD that you host on your attacking system and the second part s the request you send to your target.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/OOB.png&quot; alt=&quot;OOB req&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The attack follows the following stages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;POST request with the above body sent to the target server&lt;/li&gt;
+  &lt;li&gt;If vulnerable the XML in the requests instructs the server to access the attacker-webserver to request the external DTD which it sends back to the target server&lt;/li&gt;
+  &lt;li&gt;GET request with appended requested /etc/passwd file sent to the attacker-webserver which can be found in the logs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required.&lt;/p&gt;
 
 &lt;h3&gt;How do I find XXE?&lt;/h3&gt;
 
