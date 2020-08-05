@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/web/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-08-05T15:07:18+01:00</updated>
+  <updated>2020-08-05T21:59:57+01:00</updated>
   <id>http://localhost:4000/tag/web/feed.xml</id>
 
   
@@ -125,6 +125,21 @@
 &lt;/ul&gt;
 
 &lt;p&gt;These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required. For example &lt;a href=&quot;https://f4d3.io/xxe_wild/&quot;&gt;this article&lt;/a&gt; which uses a file upload on the site to host a DTD.&lt;/p&gt;
+
+&lt;h4&gt;Error Based&lt;/h4&gt;
+&lt;p&gt;As an alternate option if faced with a blind exploit you can attempt to get the sensitive files via a error based response that will send your requested file to your attacking server. Using this method you would request the document you wish to read and then one that does not exist.&lt;/p&gt;
+
+&lt;p&gt;This first image shows the external DTD that you host on your server or upload etc&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/errDTD.png&quot; alt=&quot;Error based DTD&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And this one is the request to execute it&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/errreq.png&quot; alt=&quot;Erro based request&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Of course in some cases the firewalls arent going to allow this and in those cases you can attempt to access a DTD on the webserver already. &lt;a href=&quot;https://github.com/GoSecure/dtd-finder/blob/698fd678f26395e1c7c097525f7182aecad0cd5f/list/xxe_payloads.md&quot;&gt;This article&lt;/a&gt; lists various ways to exploit a target if it has access to a known DTD. An example can be seen below using this method:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/localDTD.png&quot; alt=&quot;local DTD exploit&quot; /&gt;&lt;/p&gt;
 
 &lt;h3&gt;How do I find XXE?&lt;/h3&gt;
 

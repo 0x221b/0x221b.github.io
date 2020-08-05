@@ -262,6 +262,21 @@ into the {body} of the default.hbs template -->
 
 <p>These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required. For example <a href="https://f4d3.io/xxe_wild/">this article</a> which uses a file upload on the site to host a DTD.</p>
 
+<h4>Error Based</h4>
+<p>As an alternate option if faced with a blind exploit you can attempt to get the sensitive files via a error based response that will send your requested file to your attacking server. Using this method you would request the document you wish to read and then one that does not exist.</p>
+
+<p>This first image shows the external DTD that you host on your server or upload etc</p>
+
+<p><img src="assets/images/errDTD.png" alt="Error based DTD" /></p>
+
+<p>And this one is the request to execute it</p>
+
+<p><img src="assets/images/errreq.png" alt="Erro based request" /></p>
+
+<p>Of course in some cases the firewalls arent going to allow this and in those cases you can attempt to access a DTD on the webserver already. <a href="https://github.com/GoSecure/dtd-finder/blob/698fd678f26395e1c7c097525f7182aecad0cd5f/list/xxe_payloads.md">This article</a> lists various ways to exploit a target if it has access to a known DTD. An example can be seen below using this method:</p>
+
+<p><img src="assets/images/localDTD.png" alt="local DTD exploit" /></p>
+
 <h3>How do I find XXE?</h3>
 
 <p>XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.</p>
