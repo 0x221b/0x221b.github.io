@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/author/0x221B/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-08-05T14:58:09+01:00</updated>
+  <updated>2020-08-05T15:07:18+01:00</updated>
   <id>http://localhost:4000/author/0x221B/feed.xml</id>
 
   
@@ -124,7 +124,7 @@
   &lt;li&gt;GET request with appended requested /etc/passwd file sent to the attacker-webserver which can be found in the logs.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required.&lt;/p&gt;
+&lt;p&gt;These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required. For example &lt;a href=&quot;https://f4d3.io/xxe_wild/&quot;&gt;this article&lt;/a&gt; which uses a file upload on the site to host a DTD.&lt;/p&gt;
 
 &lt;h3&gt;How do I find XXE?&lt;/h3&gt;
 
