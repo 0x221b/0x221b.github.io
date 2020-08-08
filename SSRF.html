@@ -11,7 +11,7 @@
 
 
 
-    <title>OWASP Top 10 XXE (or taking liberties with acronyms)</title>
+    <title>SSRF - Location and Exploitation</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="" />
     <link rel="shortcut icon" href="http://localhost:4000/assets/images/221b.png" type="image/png" />
-    <link rel="canonical" href="http://localhost:4000/OWASP-Top-10-XXE" />
+    <link rel="canonical" href="http://localhost:4000/SSRF" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Hacker Street" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="OWASP Top 10 XXE (or taking liberties with acronyms)" />
-    <meta property="og:description" content="As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this." />
-    <meta property="og:url" content="http://localhost:4000/OWASP-Top-10-XXE" />
-    <meta property="og:image" content="http://localhost:4000/assets/images/XXE-title.png" />
+    <meta property="og:title" content="SSRF - Location and Exploitation" />
+    <meta property="og:description" content="Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server. How to find SSRF" />
+    <meta property="og:url" content="http://localhost:4000/SSRF" />
+    <meta property="og:image" content="http://localhost:4000/assets/images/SSRF-Title.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2020-08-01T00:00:00+01:00" />
-    <meta property="article:modified_time" content="2020-08-01T00:00:00+01:00" />
-    <meta property="article:tag" content="Owasp" />
+    <meta property="article:published_time" content="2020-08-06T00:00:00+01:00" />
+    <meta property="article:modified_time" content="2020-08-06T00:00:00+01:00" />
+    <meta property="article:tag" content="Web" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="OWASP Top 10 XXE (or taking liberties with acronyms)" />
-    <meta name="twitter:description" content="As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this." />
+    <meta name="twitter:title" content="SSRF - Location and Exploitation" />
+    <meta name="twitter:description" content="Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server. How to find SSRF" />
     <meta name="twitter:url" content="http://localhost:4000/" />
-    <meta name="twitter:image" content="http://localhost:4000/assets/images/XXE-title.png" />
+    <meta name="twitter:image" content="http://localhost:4000/assets/images/SSRF-Title.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Hacker Street" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Owasp" />
+    <meta name="twitter:data2" content="Web" />
     <meta name="twitter:site" content="@JonoH904" />
     <meta name="twitter:creator" content="@JonoH904" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Hacker Street",
         "logo": "http://localhost:4000/assets/images/Hstreet-small.png"
     },
-    "url": "http://localhost:4000/OWASP-Top-10-XXE",
+    "url": "http://localhost:4000/SSRF",
     "image": {
         "@type": "ImageObject",
-        "url": "http://localhost:4000/assets/images/XXE-title.png",
+        "url": "http://localhost:4000/assets/images/SSRF-Title.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:4000/OWASP-Top-10-XXE"
+        "@id": "http://localhost:4000/SSRF"
     },
-    "description": "As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this."
+    "description": "Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server. How to find SSRF"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="OWASP Top 10 XXE (or taking liberties with acronyms)" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="SSRF - Location and Exploitation" href="/feed.xml" />
 
 
 </head>
@@ -145,17 +145,13 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-owasp tag-web post ">
+        <article class="post-full  tag-web post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime=" 1 August 2020"> 1 August 2020</time>
+                    <time class="post-full-meta-date" datetime=" 6 August 2020"> 6 August 2020</time>
                     
                         <span class="date-divider">/</span>
-                        
-                            
-                               <a href='/tag/owasp/'>OWASP</a>,
-                            
                         
                             
                                <a href='/tag/web/'>WEB</a>
@@ -163,166 +159,75 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">OWASP Top 10 XXE (or taking liberties with acronyms)</h1>
+                <h1 class="post-full-title">SSRF - Location and Exploitation</h1>
             </header>
 
             
-            <figure class="post-full-image" style="background-image: url(/assets/images/XXE-title.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/images/SSRF-Title.png)">
             </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.</p>
+                    <p>Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.</p>
 
-<ol>
-  <li>Injection</li>
-  <li>Broken Authentication</li>
-  <li>Sensitive Data Exposure</li>
-  <li><b>XXE</b></li>
-  <li>Broken Access Control</li>
-  <li>Security Misconfiguration</li>
-  <li>XSS</li>
-  <li>Insecure Deserialisation</li>
-  <li>Using Components With Known Vulnerabilities</li>
-  <li>Insufficient Logging and Monitoring</li>
-</ol>
+<h2>How to find SSRF</h2>
 
-<p>This post is going to focus on number 4 on the list XML External Entity more commonly known as XXE.</p>
+<p>SSRF’s should be checked for in any url parameters that contain any links or domain names especially FQDNs, in a similar way to Open Redirects.</p>
 
-<h2>XXE</h2>
+<h2>Types of SSRF</h2>
 
-<p><strong>Impact:</strong> 8          <strong>Risk:</strong> 7          <strong>Difficulty:</strong> 3</p>
+<h3>Against the server itself</h3>
 
-<h3>So what is an XXE?</h3>
+<p>In this case an SSRF is exploited to read web pages on the server that would normally be forbidden. This works as the HTTP request comes from the web server rather than the client. The image below is taken from the Portswigger Web Academy labs and shows a request to the server itself to access the previously blocked page /admin. The original API address in the data of the POST request has been replaced with a request to the admin page on the local host.</p>
 
-<p>XXE is a little inceptionesque when it comes to naming. XXE stands for XML External Entity but the acronym within the acronym XML stands for Extensible Markup Language. Apart from playing fast and loose with E’s and X’s in acronyms its pretty obvious even to the most technophobic of readers that as it suggests XML is a mark up language.</p>
+<p><img src="assets/images/ssrf-self.png" alt="SSRF on self example" /></p>
 
-<p>XML uses tags like HTML only instead of boring h2s and ps the tags are user defined. Anyway you can all look in wikipedia so i think we have reached the recommended daily dose of what XML does except to say that it is a language that web sites use to structure the information they hold.</p>
+<h3>SSRF to Internal Private Network</h3>
 
-<p>An example of an XML document can be seen below in Figure 1.</p>
+<p>As you are able to control the HTTP requests of the web server that means you able to access any private networks it is connected to and can therefore reach any back end servers that have HTTP access.</p>
 
-<p><img src="assets/images/xml-example.png" alt="XML example - Figure 1" /></p>
+<p>The image below shows burp intruder scanning through the private network via SSRF in order to locate any other hosts that are up.</p>
 
-<p>To understand XXE you must first understand Document Type Definition (DTD) files. These define the structure of the XML file. DTD files can be internal or external, that is they can be defined within the XML file or reference one at a given external location.</p>
+<p><img src="assets/images/SSRF-scan.png" alt="SSRF scan" /></p>
 
-<p>DTDs hold entities and the entities can call system commands. And there in lies our vulnerability. This means that by injecting into an XML document you can change what the system call does. For example we can make the XML ask to provide information from the server or connect to our malicious server. Never trust a user. If this all sounds overly complicated the examples below should clear it all up.</p>
+<p>As well as finding open hosts on the network a similar effect can be achieved looking for open ports on those hosts. Simply add the port number to the burp intruder scan and look for some common HTTP ports on any open hosts you find.</p>
 
-<p>Pre-warning - this article contains spoliers for the Portswigger’s Web Academy’s XXE labs and Hack the Box retired DevOops box.</p>
+<h3>Blind SSRF</h3>
 
-<h3>Types of XXE</h3>
+<p>Like other blind attacks a blind SSRF is one that provides no obvious feedback in the HTTP response. An example of this would be an SSRF in the Referer header that could be accessed at a later date by the system logging where sites are referred from. This does limit you to connecting to your own malicious site rather then other systems on the network so is generally not as serious but can still cause issues depending on what you hot on your site.</p>
 
-<p>Types of XXE attack are:</p>
+<h2>SSRF By Other Means</h2>
 
-<ul>
-  <li>XXE with LFI</li>
-  <li>XXE with SSRF</li>
-  <li>XXE to exfiltrate data out of band</li>
-</ul>
+<h3>SSRF Through XXE</h3>
 
-<p>To cover each of these we will work through the labs available on PortSwiggers Web Academy.</p>
+<p>One of the main way to exploit XXE is by embedding an SSRF in it. For more details on this see my previous post on <a href="https://0x221b.github.io/OWASP-Top-10-XXE">XXE</a></p>
 
-<h4>XXE with LFI</h4>
+<h3>SSRF Through Open Redirect</h3>
 
-<p>The Web academy sets up a simple site that uses XML documents to check stock levels. Figure 2 shows the intended request and response in Burp Suite.</p>
+<p>One way to exploit an SSRF is via an Open Redirect vulnerability, where instead of pointing it at an external resource you point it at an internal one the same as an SSRF.</p>
 
-<p><img src="assets/images/XXE-LFI-req.png" alt="XXE with LFI intended request - Figure 2" /></p>
+<h2>Bypassing Filters</h2>
 
-<p>Figure 2 shows the altered request and the reponse showing the details of the requested file.</p>
+<h3>Blacklisting Bypass</h3>
 
-<p>To come back to explanation of an XXE the external entity is the &amp;xxe that is defined and then called later on in the document and thus injected into the server.</p>
+<p>A blacklist on the site will block certain strnigs or chars. I have a list on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Blacklist-bypass.txt">GitHub</a> where I have a list of possible bypasses to try in order to reach the local host but obviously these can be adapted to suit whatever it is you are trying to access.</p>
 
-<p><img src="assets/images/XXE-LFI-exploit.png" alt="XXE with LFI exploit - Figure 3" /></p>
+<h3>Whitelisting Bypass</h3>
 
-<p>With the addition of the line DOCTYPE line to declare the xxe external entity and then calling it in the product id it responds with the requested file. From there follow the instructions in my <a href="https://0x221b.github.io/LFI-to-RCE">LFI</a> to find interesting files and see if you can escalate.</p>
+<p>A white list on the other hand will only allow submissions that contain certain strings. The key here is to include the expected domain as well as malicious one. Again on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Whitelist-bypass.txt">Github</a> I have a wordlist to attempt to circumvent these. It is set up for the local host but can be adapted for any. Some will only work if you are pointing it to a site you control.</p>
 
-<h4>XXE with SSRF</h4>
-
-<p>This time the same site can be exploited by adding the following http request in place of the file.</p>
-
-<p><img src="assets/images/XXE-SSRF.png" alt="XXE with SSRF - Figure 4" /></p>
-
-<p>With this you are able to access another mahcine on the network (SSRF article coming soon) or your own malicious site to extract files from the server if the way above doesnt work.</p>
-
-<p>If you get no response on the LFI and SSRF it doesn’t always mean it isn’t vulnerable. If you use a canary token or your own web server you can try connecting back (similar syntax as SSRF) to that and see if you can attach a file in the parameters.</p>
-
-<h4>OOB</h4>
-
-<p>For this we need to define an external DTD in order for the exploit to work. The first part of the image below is the external DTD that you host on your attacking system and the second part s the request you send to your target.</p>
-
-<p><img src="assets/images/OOB.png" alt="OOB req" /></p>
-
-<p>The attack follows the following stages:</p>
-
-<ul>
-  <li>POST request with the above body sent to the target server</li>
-  <li>If vulnerable the XML in the requests instructs the server to access the attacker-webserver to request the external DTD which it sends back to the target server</li>
-  <li>GET request with appended requested /etc/passwd file sent to the attacker-webserver which can be found in the logs.</li>
-</ul>
-
-<p>These should cause DNS and HTTP requests to your webserver if yo recieve one and not the other further debugging may be required. For example <a href="https://f4d3.io/xxe_wild/">this article</a> which uses a file upload on the site to host a DTD.</p>
-
-<h4>Error Based</h4>
-<p>As an alternate option if faced with a blind exploit you can attempt to get the sensitive files via a error based response that will send your requested file to your attacking server. Using this method you would request the document you wish to read and then one that does not exist.</p>
-
-<p>This first image shows the external DTD that you host on your server or upload etc</p>
-
-<p><img src="assets/images/errDTD.png" alt="Error based DTD" /></p>
-
-<p>And this one is the request to execute it</p>
-
-<p><img src="assets/images/errreq.png" alt="Erro based request" /></p>
-
-<p>Of course in some cases the firewalls arent going to allow this and in those cases you can attempt to access a DTD on the webserver already. <a href="https://github.com/GoSecure/dtd-finder/blob/698fd678f26395e1c7c097525f7182aecad0cd5f/list/xxe_payloads.md">This article</a> lists various ways to exploit a target if it has access to a known DTD. An example can be seen below using this method:</p>
-
-<p><img src="assets/images/localDTD.png" alt="local DTD exploit" /></p>
-
-<h3>How do I find XXE?</h3>
-
-<p>XXE should be tested anywhere an xml document is submitted. Although the examples below are oversimplified examples in the real world the xml is likely to have a lot of objects and each of them must be tested. On different sites XML can be produced for different reasons. Once your recon of a site is complete check you burp logs for any xml documents being sent to the server and give them a try.</p>
-
-<p>Keep an eye out for Content-Type: application/xml in requests.</p>
-
-<p>But everything is JSON these days, well its still possible to convert the JSON to XML and attempt the exploit. Convert with an <a href="https://www.convertjson.com/json-to-xml.htm">online tool</a> and change the content type to the above and it might sneak through. For more details on this, see this great <a href="https://blog.netspi.com/playing-content-type-xxe-json-endpoints/">article</a></p>
-
-<p>Another place to look for XXE is in File Uploads. If you cant manage to upload a reverse shell sometimes these file uploads accept XML documents. The example below is from Hack The Box DevOops and shows an LFI being executed through an XML file upload.</p>
-
-<p><img src="assets/images/devoops.png" alt="DevOops example" /></p>
-
-<p>Now we know the users on the system and their home directories we can check for SSH keys as seen below.</p>
-
-<p><img src="assets/images/devoops-ssh.png" alt="SSH key" /></p>
-
-<h3>Payloads</h3>
-
-<p>A list of all the XXE payloads you could possibly want are available on payloads all the things <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection">GitHub</a>.</p>
-
-<h3>Examples in Hack The Box</h3>
-
-<p>For those wishing to practice XXE there are example on DVWA and Juice Shop as well as the below retired Hack the Box machines:</p>
-
-<ul>
-  <li>Aragog</li>
-  <li>Fulcrum</li>
-  <li>DevOOPs</li>
-</ul>
-
-<h3>Prevention</h3>
-
-<p>Disable any unused XML parsing features that could be used by attackers to run XXE in particular resolution of external entities and support for XInclude</p>
-
-<h3>Disclaimer</h3>
+<h2>Disclaimer</h2>
 
 <p>As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.</p>
 
-<h3>Conclusion</h3>
+<h2>Conclusion</h2>
 
-<p>This has been a brief over view of how to find and exploit XXE. The combination of the Web Academy and Hack the Box should be sufficient to get your head around this topic and then its just a case of expanding this to bigger documents in the wild. Check back from time to time as I will be adding new content to this page and others as I discover more things. XXEs most commonly result in the ability to read files on the system which can potentially be escalated or to connect to internal networks and services or an external malicious host.</p>
+<p>This article has covered the basics of SSRF but like most web vulns there are always new tricks and traps coming out. I will be updating this blog as I discover more info so check back another time.</p>
 
-<p>Any comments or questions please contact me on twitter at the link at the top of the page.</p>
+<p>Any comments, resource suggestions or questions please contact me on twitter at the link at the top of the page.</p>
 
 <p><img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
-
 
                 </div>
             </section>
@@ -396,7 +301,7 @@ into the {body} of the default.hbs template -->
                         <header class="read-next-card-header">
                             <small class="read-next-card-header-sitetitle">&mdash; Hacker Street &mdash;</small>
                             
-                                <h3 class="read-next-card-header-title"><a href="/tag/owasp/">Owasp</a></h3>
+                                <h3 class="read-next-card-header-title"><a href="/tag/web/">Web</a></h3>
                             
                         </header>
                         <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
@@ -406,13 +311,34 @@ into the {body} of the default.hbs template -->
                                 
                                 
                                   
-                                
-                                  
                                     
                                   
                                 
                                   
+                                    
+                                        
+                                        
+                                            <li><a href="/OWASP-Top-10-XXE">OWASP Top 10 XXE (or taking liberties with acronyms)</a></li>
+                                        
+                                    
+                                  
                                 
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/Webdav-with-Granny-and-Grandpa">Hacking WebDAV with Granny and Grandpa</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/LFI-to-RCE">Finding, Exploiting and Escalating LFI</a></li>
+                                        
+                                    
                                   
                                 
                                   
@@ -420,8 +346,6 @@ into the {body} of the default.hbs template -->
                                   
                                     
                                         
-                                        
-                                            <li><a href="/OWASP-Top-10-Command-Injection">OWASP Top 10 OS Command Injection</a></li>
                                         
                                     
                                   
@@ -429,9 +353,9 @@ into the {body} of the default.hbs template -->
                             </ul>
                         </div>
                         <footer class="read-next-card-footer">
-                            <a href="/tag/owasp/">
+                            <a href="/tag/web/">
                                 
-                                    See all 1 posts  →
+                                    See all 4 posts  →
                                 
                             </a>
                         </footer>
@@ -441,55 +365,6 @@ into the {body} of the default.hbs template -->
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/SSRF">
-                <div class="post-card-image" style="background-image: url(/assets/images/SSRF-Title.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/SSRF">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Web</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">SSRF - Location and Exploitation</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p></p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/221b.png" alt="0x221B" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/0x221B/">0x221B</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -497,21 +372,17 @@ into the {body} of the default.hbs template -->
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/Webdav-with-Granny-and-Grandpa">
-                <div class="post-card-image" style="background-image: url(/assets/images/webdav-logo.png)"></div>
+            <a class="post-card-image-link" href="/OWASP-Top-10-XXE">
+                <div class="post-card-image" style="background-image: url(/assets/images/XXE-title.png)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/Webdav-with-Granny-and-Grandpa">
+            <a class="post-card-content-link" href="/OWASP-Top-10-XXE">
                 <header class="post-card-header">
                     
                         
                             
-                               <span class="post-card-tags">Networking</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Htb</span>
+                               <span class="post-card-tags">Owasp</span>
                             
                         
                             
@@ -520,7 +391,7 @@ into the {body} of the default.hbs template -->
                         
                     
 
-                    <h2 class="post-card-title">Hacking WebDAV with Granny and Grandpa</h2>
+                    <h2 class="post-card-title">OWASP Top 10 XXE (or taking liberties with acronyms)</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
@@ -566,18 +437,18 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">OWASP Top 10 XXE (or taking liberties with acronyms)</div>
+    <div class="floating-header-title">SSRF - Location and Exploitation</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=OWASP+Top+10+XXE+%28or+taking+liberties+with+acronyms%29&amp;url=https://0x221b.github.io/OWASP-Top-10-XXE"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=SSRF+-+Location+and+Exploitation&amp;url=https://0x221b.github.io/SSRF"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/OWASP-Top-10-XXE"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/SSRF"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

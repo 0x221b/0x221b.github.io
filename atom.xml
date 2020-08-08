@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>SSRF - Location and Exploitation</title>
+        
+          <description>&lt;p&gt;Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 06 Aug 2020 00:00:00 +0100</pubDate>
+        <link>
+        http://localhost:4000/SSRF</link>
+        <guid isPermaLink="true">http://localhost:4000/SSRF</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>OWASP Top 10 XXE (or taking liberties with acronyms)</title>
         
           <description>&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
@@ -71,7 +86,7 @@ LFI is a useful vulnerability to find but if there are no interesting files on t
       <item>
         <title>OWASP Top 10 OS Command Injection</title>
         
-          <description>&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+          <description>&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the OWASP Top 10 first. I have had the chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 </description>
         

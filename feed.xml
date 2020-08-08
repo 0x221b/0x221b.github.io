@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-06T08:08:34+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">OWASP Top 10 XXE (or taking liberties with acronyms)</title><link href="http://localhost:4000/OWASP-Top-10-XXE" rel="alternate" type="text/html" title="OWASP Top 10 XXE (or taking liberties with acronyms)" /><published>2020-08-01T00:00:00+01:00</published><updated>2020-08-01T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-XXE</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-XXE">&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-08T21:05:45+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">SSRF - Location and Exploitation</title><link href="http://localhost:4000/SSRF" rel="alternate" type="text/html" title="SSRF - Location and Exploitation" /><published>2020-08-06T00:00:00+01:00</published><updated>2020-08-06T00:00:00+01:00</updated><id>http://localhost:4000/SSRF</id><content type="html" xml:base="http://localhost:4000/SSRF">&lt;p&gt;Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.&lt;/p&gt;
+
+&lt;h2&gt;How to find SSRF&lt;/h2&gt;
+
+&lt;p&gt;SSRF’s should be checked for in any url parameters that contain any links or domain names especially FQDNs, in a similar way to Open Redirects.&lt;/p&gt;
+
+&lt;h2&gt;Types of SSRF&lt;/h2&gt;
+
+&lt;h3&gt;Against the server itself&lt;/h3&gt;
+
+&lt;p&gt;In this case an SSRF is exploited to read web pages on the server that would normally be forbidden. This works as the HTTP request comes from the web server rather than the client. The image below is taken from the Portswigger Web Academy labs and shows a request to the server itself to access the previously blocked page /admin. The original API address in the data of the POST request has been replaced with a request to the admin page on the local host.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/ssrf-self.png&quot; alt=&quot;SSRF on self example&quot; /&gt;&lt;/p&gt;
+
+&lt;h3&gt;SSRF to Internal Private Network&lt;/h3&gt;
+
+&lt;p&gt;As you are able to control the HTTP requests of the web server that means you able to access any private networks it is connected to and can therefore reach any back end servers that have HTTP access.&lt;/p&gt;
+
+&lt;p&gt;The image below shows burp intruder scanning through the private network via SSRF in order to locate any other hosts that are up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/SSRF-scan.png&quot; alt=&quot;SSRF scan&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As well as finding open hosts on the network a similar effect can be achieved looking for open ports on those hosts. Simply add the port number to the burp intruder scan and look for some common HTTP ports on any open hosts you find.&lt;/p&gt;
+
+&lt;h3&gt;Blind SSRF&lt;/h3&gt;
+
+&lt;p&gt;Like other blind attacks a blind SSRF is one that provides no obvious feedback in the HTTP response. An example of this would be an SSRF in the Referer header that could be accessed at a later date by the system logging where sites are referred from. This does limit you to connecting to your own malicious site rather then other systems on the network so is generally not as serious but can still cause issues depending on what you hot on your site.&lt;/p&gt;
+
+&lt;h2&gt;SSRF By Other Means&lt;/h2&gt;
+
+&lt;h3&gt;SSRF Through XXE&lt;/h3&gt;
+
+&lt;p&gt;One of the main way to exploit XXE is by embedding an SSRF in it. For more details on this see my previous post on &lt;a href=&quot;https://0x221b.github.io/OWASP-Top-10-XXE&quot;&gt;XXE&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3&gt;SSRF Through Open Redirect&lt;/h3&gt;
+
+&lt;p&gt;One way to exploit an SSRF is via an Open Redirect vulnerability, where instead of pointing it at an external resource you point it at an internal one the same as an SSRF.&lt;/p&gt;
+
+&lt;h2&gt;Bypassing Filters&lt;/h2&gt;
+
+&lt;h3&gt;Blacklisting Bypass&lt;/h3&gt;
+
+&lt;p&gt;A blacklist on the site will block certain strnigs or chars. I have a list on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Blacklist-bypass.txt&quot;&gt;GitHub&lt;/a&gt; where I have a list of possible bypasses to try in order to reach the local host but obviously these can be adapted to suit whatever it is you are trying to access.&lt;/p&gt;
+
+&lt;h3&gt;Whitelisting Bypass&lt;/h3&gt;
+
+&lt;p&gt;A white list on the other hand will only allow submissions that contain certain strings. The key here is to include the expected domain as well as malicious one. Again on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Whitelist-bypass.txt&quot;&gt;Github&lt;/a&gt; I have a wordlist to attempt to circumvent these. It is set up for the local host but can be adapted for any. Some will only work if you are pointing it to a site you control.&lt;/p&gt;
+
+&lt;h2&gt;Disclaimer&lt;/h2&gt;
+
+&lt;p&gt;As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This article has covered the basics of SSRF but like most web vulns there are always new tricks and traps coming out. I will be updating this blog as I discover more info so check back another time.&lt;/p&gt;
+
+&lt;p&gt;Any comments, resource suggestions or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="Web" /><summary type="html">Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.</summary></entry><entry><title type="html">OWASP Top 10 XXE (or taking liberties with acronyms)</title><link href="http://localhost:4000/OWASP-Top-10-XXE" rel="alternate" type="text/html" title="OWASP Top 10 XXE (or taking liberties with acronyms)" /><published>2020-08-01T00:00:00+01:00</published><updated>2020-08-01T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-XXE</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-XXE">&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Injection&lt;/li&gt;
@@ -379,7 +437,7 @@ This is also where you enumeration comes into play. If you know the exact OS the
 &lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
 
 &lt;p&gt;Copied from my old &lt;a href=&quot;https://testofpen.wordpress.com/2020/04/03/ghostcat-vulnerability-cve-2020-1938/&quot;&gt;blog&lt;/a&gt; published 3 April 2020.
-&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="CVE" /><summary type="html">To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.</summary></entry><entry><title type="html">OWASP Top 10 OS Command Injection</title><link href="http://localhost:4000/OWASP-Top-10-Command-Injection" rel="alternate" type="text/html" title="OWASP Top 10 OS Command Injection" /><published>2020-07-22T00:00:00+01:00</published><updated>2020-07-22T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-Command-Injection</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="CVE" /><summary type="html">To continue my theme of better late than never I have a quick write up of the ghost cat vulnerability. Probably old news to most but wanted to get my learning down on “paper” to help me organise my thoughts. I will start with a few definitions and then move on to the POC and remediations. The POC is from the room on Tryhackme.com.</summary></entry><entry><title type="html">OWASP Top 10 OS Command Injection</title><link href="http://localhost:4000/OWASP-Top-10-Command-Injection" rel="alternate" type="text/html" title="OWASP Top 10 OS Command Injection" /><published>2020-07-22T00:00:00+01:00</published><updated>2020-07-22T00:00:00+01:00</updated><id>http://localhost:4000/OWASP-Top-10-Command-Injection</id><content type="html" xml:base="http://localhost:4000/OWASP-Top-10-Command-Injection">&lt;p&gt;I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the OWASP Top 10 first. I have had the chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found &lt;a href=&quot;https://owasp.org/www-project-top-ten/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;b&gt;Injection&lt;/b&gt;&lt;/li&gt;
@@ -502,4 +560,4 @@ A good list of bypasses and tricks can be found on &lt;a href=&quot;https://gith
 &lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
 
 &lt;p&gt;Copied from my old &lt;a href=&quot;https://testofpen.wordpress.com/&quot;&gt;blog&lt;/a&gt; published 6 June 2020.
-&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="OWASP" /><category term="Web" /><summary type="html">I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the Top 10 first. I, like most people interested in information security, have been aware of the top 10 for a while and even had chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found here.</summary></entry></feed>
+&lt;img src=&quot;assets/images/221b.png&quot; alt=&quot;&amp;quot;0x221B&amp;quot;&quot; /&gt;&lt;/p&gt;</content><author><name>0x221B</name></author><category term="OWASP" /><category term="Web" /><summary type="html">I have decided to dig a little deeper into the OWASP top 10. I find web security such a vast subject (with new issues being found daily) that instead of chasing around every new issue I come across my time would be better spent getting a better understanding of the OWASP Top 10 first. I have had the chance to set up labs or practice them on hack the box but this will be the first time I consolidate my knowledge in a blog for future reference. I believe this understanding will help me when I explore more niche vulnerabilities in the future. For those new to the subject and not aware of these 10, I list them below. Further details can also be found here.</summary></entry></feed>
