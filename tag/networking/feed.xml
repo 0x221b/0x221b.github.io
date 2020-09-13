@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
   <link href="http://localhost:4000/tag/networking/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2020-08-29T09:52:08+01:00</updated>
+  <updated>2020-09-13T21:19:18+01:00</updated>
   <id>http://localhost:4000/tag/networking/feed.xml</id>
 
   
@@ -136,6 +136,8 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
 &lt;p&gt;This article is a quick exploration of what it is possible to do if you find WebDAV running on a web server. Although less likely these days. To help illustrate this we have mainly used the GRANNY machine from Hack the Box. The reason I havent included too much from GRANDPA is because you get basically the same result but all good for practice.&lt;/p&gt;
 
 &lt;p&gt;Any comments or questions please contact me on twitter at the link at the top of the page.&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js&quot; data-name=&quot;bmc-button&quot; data-slug=&quot;0x221b&quot; data-color=&quot;#FFDD00&quot; data-emoji=&quot;&quot; data-font=&quot;Cookie&quot; data-text=&quot;Buy me a coffee&quot; data-outline-color=&quot;#000&quot; data-font-color=&quot;#000&quot; data-coffee-color=&quot;#fff&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;I am currently transfering some pages from my old &lt;a href=&quot;https://testofpen.wordpress.com/&quot;&gt;blog&lt;/a&gt;, visit there for more content in the mean time.&lt;/p&gt;
 

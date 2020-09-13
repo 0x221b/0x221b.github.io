@@ -11,7 +11,7 @@
 
 
 
-    <title>Hacking WebDAV with Granny and Grandpa</title>
+    <title>OWASP Top 10 SQL Injection</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="" />
     <link rel="shortcut icon" href="http://localhost:4000/assets/images/221b.png" type="image/png" />
-    <link rel="canonical" href="http://localhost:4000/Webdav-with-Granny-and-Grandpa" />
+    <link rel="canonical" href="http://localhost:4000/OWASP-Top-10-SQL-Injection" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Hacker Street" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Hacking WebDAV with Granny and Grandpa" />
-    <meta property="og:description" content="Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and" />
-    <meta property="og:url" content="http://localhost:4000/Webdav-with-Granny-and-Grandpa" />
-    <meta property="og:image" content="http://localhost:4000/assets/images/webdav-logo.png" />
+    <meta property="og:title" content="OWASP Top 10 SQL Injection" />
+    <meta property="og:description" content="As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this." />
+    <meta property="og:url" content="http://localhost:4000/OWASP-Top-10-SQL-Injection" />
+    <meta property="og:image" content="http://localhost:4000/assets/images/SQLI-title.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2020-07-29T00:00:00+01:00" />
-    <meta property="article:modified_time" content="2020-07-29T00:00:00+01:00" />
-    <meta property="article:tag" content="Networking" />
+    <meta property="article:published_time" content="2020-09-07T00:00:00+01:00" />
+    <meta property="article:modified_time" content="2020-09-07T00:00:00+01:00" />
+    <meta property="article:tag" content="Owasp" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hacking WebDAV with Granny and Grandpa" />
-    <meta name="twitter:description" content="Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and" />
+    <meta name="twitter:title" content="OWASP Top 10 SQL Injection" />
+    <meta name="twitter:description" content="As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this." />
     <meta name="twitter:url" content="http://localhost:4000/" />
-    <meta name="twitter:image" content="http://localhost:4000/assets/images/webdav-logo.png" />
+    <meta name="twitter:image" content="http://localhost:4000/assets/images/SQLI-title.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Hacker Street" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Networking" />
+    <meta name="twitter:data2" content="Owasp" />
     <meta name="twitter:site" content="@JonoH904" />
     <meta name="twitter:creator" content="@JonoH904" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Hacker Street",
         "logo": "http://localhost:4000/assets/images/Hstreet-small.png"
     },
-    "url": "http://localhost:4000/Webdav-with-Granny-and-Grandpa",
+    "url": "http://localhost:4000/OWASP-Top-10-SQL-Injection",
     "image": {
         "@type": "ImageObject",
-        "url": "http://localhost:4000/assets/images/webdav-logo.png",
+        "url": "http://localhost:4000/assets/images/SQLI-title.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:4000/Webdav-with-Granny-and-Grandpa"
+        "@id": "http://localhost:4000/OWASP-Top-10-SQL-Injection"
     },
-    "description": "Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and"
+    "description": "As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this."
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Hacking WebDAV with Granny and Grandpa" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="OWASP Top 10 SQL Injection" href="/feed.xml" />
 
 
 </head>
@@ -145,20 +145,16 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-networking tag-htb tag-web post ">
+        <article class="post-full  tag-owasp tag-web post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="29 July 2020">29 July 2020</time>
+                    <time class="post-full-meta-date" datetime=" 7 September 2020"> 7 September 2020</time>
                     
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/networking/'>NETWORKING</a>,
-                            
-                        
-                            
-                               <a href='/tag/htb/'>HTB</a>,
+                               <a href='/tag/owasp/'>OWASP</a>,
                             
                         
                             
@@ -167,105 +163,118 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Hacking WebDAV with Granny and Grandpa</h1>
+                <h1 class="post-full-title">OWASP Top 10 SQL Injection</h1>
             </header>
 
             
-            <figure class="post-full-image" style="background-image: url(/assets/images/webdav-logo.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/images/SQLI-title.png)">
             </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>Web Distributed Authoring and Versioning (WebDAV) is an extension on HTTP that provides further methods to allow users to control content more readily. Webdav allows authorised users to create, move and alter files on a server. They are used by software that supports publishing of data such as sharepoint and outlook.</p>
+                    <p>As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.</p>
 
-<p>What could possibly go wrong…</p>
+<ol>
+  <li><b>Injection</b></li>
+  <li>Broken Authentication</li>
+  <li>Sensitive Data Exposure</li>
+  <li>XXE</li>
+  <li>Broken Access Control</li>
+  <li>Security Misconfiguration</li>
+  <li>XSS</li>
+  <li>Insecure Deserialisation</li>
+  <li>Using Components With Known Vulnerabilities</li>
+  <li>Insufficient Logging and Monitoring</li>
+</ol>
 
-<p>For this article I will be using the retired Hack the Box machines Granny and Grandpa. These boxes are both retired but if you don’t want spoilers on how to do them don’t read any further.</p>
+<p>This post is going to focus on number 1 on the list, I have previously written about command injection and now i’m going to cover SQL Injection.</p>
 
-<h2>Webdav methods</h2>
+<h2>Types of SQL</h2>
 
-<ul>
-  <li>SEARCH - Allows searching of webDAV resources</li>
-  <li>PROPFIND - retrieve properties from a resource</li>
-  <li>PROPPATCH - modify properties</li>
-  <li>MKCOL - create collections (directories, think mkdir)</li>
-  <li>COPY - copy a resource</li>
-  <li>MOVE - move a resource</li>
-  <li>LOCK - Locks a resource to prevent editing</li>
-  <li>UNLOCK - unlocks resource</li>
-  <li>CHECKIN - version control</li>
-  <li>CHECKOUT - version control</li>
-</ul>
+<p>Before we get on to the exploitation a quick definition of SQL is needed. Skip this paragraph if you are happy with it already. SQL or Structured Query Language is used to retrieve information from databases. It comes in many flavours, the most common being MySQL and MSSQL and the syntax differs depending on the language used. but it basically boils down to sending a particular query to the database to retrieve the information you require. An oversimplified example would be SELECT * FROM tablename; that would return all the information from your table</p>
 
-<h2>Webdav hacking</h2>
+<p>Databases are used by websites to store all kinds of information, from product info, stock levels and even user credentials.</p>
 
-<h3>Discovering WebDav</h3>
+<h2>SQL Injection</h2>
 
-<p>If you are running an Nmap scan of a system with the -sC setting for safe scripts then it will scan for the presence of WebDAV by default. If it finds it you will get an output like in Fig 1.</p>
+<p><strong>Impact:</strong> 10          <strong>Risk:</strong> 10          <strong>Difficulty:</strong> 1-5 (depending on method and whether you use sqlmap)</p>
 
-<p><img src="assets/images/webDAV-nmap-sVC.png" alt="WebDAV Nmap response" /></p>
+<h3>So what is an SQL Injection attack?</h3>
 
-<p>Figure 1. Nmap’s WebDAV scan results from GRANNY</p>
+<p>An SQL Injection is pretty self explanatory it is a method of injecting malicious content into an SQL query through some method that allows you further access to the database than the creators intended. From this you can read, write and delete entries from databases compromising any data they have on there. This becomes especially dangerous if you can access the database with all the saved credentials. These should be stored as hashes (One would hope…) but these can then be saved to crack offline.</p>
 
-<p>This scan also lists all the methods avialble to us including the additional features of WebDAV. Similar information can be gleaned from a simple OPTIONS request to the web server as shown in Fig 2.</p>
+<p>An SQL Injection can occur anywhere that user input is included, unsanitized, in an SQL query to the backend database. If a user can manuipulate the query then they can get it to return whatever they want from the database and even escalate access in some cases.</p>
 
-<p><img src="assets/images/webDAV-OPTIONS.png" alt="WebDAV OPTIONS response" /></p>
+<h3>Types of SQL Injection</h3>
 
-<p>Figure 2. OPTIONS request using BurpSuite showing allowed methods on GRANNY</p>
+<p>WHERE, UPDATE, INSERT,</p>
+
+<p>First of all we will look at when results of the SQL query are returned on the webpage and therefore data can be read.</p>
+
+<h4>basic</h4>
+
+<p>If data is returned to the webpage then the injection has been successful and you now have access to the current table and should be able to read all its data.</p>
+
+<h4>Union</h4>
+
+<p>But what if you want to read other tables in the database. That is where UNION Queries come in.</p>
+
+<h4>Blind</h4>
+
+<h4>Second Order</h4>
+
+<h3>How do I find SQL Injection?</h3>
+
+<p>To find low hanging fruit I have compiled a gf json <a href="https://github.com/0x221b/Wordlists/">file</a> to find commonly vulnerable params for SQL Injection.</p>
+
+<p>Port Swiggers Web Academy suggests the following steps:</p>
+<ol>
+  <li>Submitting the single quote character ‘ and looking for errors or other anomalies.</li>
+  <li>Submitting some SQL-specific syntax that evaluates to the base (original) value of the entry point, and to a different value, and looking for systematic differences in the resulting application responses.</li>
+  <li>Submitting Boolean conditions such as OR 1=1 and OR 1=2, and looking for differences in the application’s responses.</li>
+  <li>Submitting payloads designed to trigger time delays when executed within an SQL query, and looking for differences in the time taken to respond.</li>
+  <li>Submitting OAST payloads designed to trigger an out-of-band network interaction when executed within an SQL query, and monitoring for any resulting interactions.</li>
+</ol>
+
+<p>placeholder</p>
 
 <h3>Exploitation</h3>
+<p>Recon:
+Version number: DB dependant (Oracle: SELECT * FROM v$version, MSSQL: SELECT @@version, PostgreSQL: SELECT version(), MySQL: SELECT @@version)
+List of tables: SELECT * FROM information_schema.tables</p>
 
-<p>Now we have established which methods we can use we know what we have to play with. Lets look at the interesting ones.</p>
+<h4>Payloads</h4>
 
-<h4>MOVE</h4>
+<p>Building query:</p>
 
-<p>The MOVE method is the same as it is on linux (mv) we are able to move a file from one place to another or rename it in place. This is interesting in a similar way to my previous article on LFI, in that if we can somehow get text onto the system that we can access over the web with a file upload etc we can change it from a txt file to a php for example and get code execution.</p>
+<p>-
+-Balance the quotes</p>
 
-<p>This is where the PUT HTTP method comes to help us. If PUT is allowed which would make sense on this kind of server it gets rid of the usual problem with file uploads where you have to bypass various filters on the file extension. With this we can PUT a txt file and MOVE it to create an executable. Then all we have to do is visit the page and we have RCE.</p>
+<h4>Filter bypasses</h4>
 
-<p>As with file uploads the first step is to assess which file types we are allowed to upload. This can be achieved with BurpSuite and a file extension list. If you don’t have one I have a list on my <a href="https://github.com/0x221b/Wordlists/blob/master/Extensions.txt">GitHub</a>. Attempt to upload a txt document and then in intruder highlight the file extension and sniper it with my wordlist.</p>
+<p>placeholder</p>
 
-<p><img src="/assets/images/PUT-extensions.png" alt="Permitted PUT extensions" /></p>
+<h3>Bypassing Authentication with SQL Injection</h3>
 
-<p>Figure 3. Burp Intruder showing permitted extensions on GRANNY</p>
+<p>In addition to dumping the database SQL Injection can be used to bypass login forms. p289</p>
 
-<p>Now we know we are limited by all the interesting file extensions but thanks to the MOVE command being available we are able to upload a text file containing a web shell etc and then convert it to a .aspx file in order to execute it.
-And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say. The process can be seen in more detail in the following images</p>
+<h3>SQLMap</h3>
 
-<p>This example uses code for an aspx rev shell using the standard kali one but a metasploit one can be made with msfvenom for a full reverse shell</p>
+<p>No article on SQL Injection is complete without covering SQLMap.</p>
 
-<p><img src="assets/images/PUT-req.png" alt="PUT request of txt doc" /></p>
+<h3>Examples in Hack The Box</h3>
 
-<p>Figure 4. PUT txt file containing</p>
+<p>For those wishing to practice SQL Injection there are example on DVWA and Juice Shop as well as the below retired Hack the Box machines:</p>
 
-<p><img src="assets/images/txt-doc.png" alt="Upload check" /></p>
+<ul>
+  <li></li>
+  <li></li>
+</ul>
 
-<p>Figure 5. Check the file has uploaded successfully</p>
+<h3>Prevention</h3>
 
-<p><img src="assets/images/MOVE-req.png" alt="MOVE request to .aspx" /></p>
-
-<p>Figure 6. MOVE request to convert txt to aspx</p>
-
-<p><img src="assets/images/aspx-shell.png" alt="ASPX shell" /></p>
-
-<p>Figure 7. aspx web shell as nt authority\network service</p>
-
-<p>A lot of this work can be automated with the davtest tool as can be seen below in Fig 8.</p>
-
-<p><img src="/assets/images/davtest.png" alt="davtest tool running against GRANNY" /></p>
-
-<p>Figure 8. Davtest tool</p>
-
-<p>Of course you can also cheat and just use ​iis_webdav_upload_asp Metasploit module instead.</p>
-
-<h4>PROPFIND</h4>
-
-<p>CVE-2017-7269 affects the PROPFIND method on certain releases. In Figure 9 below the exploit can be seen being run from Metasploit to get a meterpreter shell.</p>
-
-<p><img src="assets/images/PROPFIND.png" alt="PROPFIND rev shell" /></p>
-
-<p>Figure 9. Reverse shell with PROPFIND exploit using Metasploit on GRANNY</p>
+<p>placeholder</p>
 
 <h3>Disclaimer</h3>
 
@@ -273,13 +282,11 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
 
 <h3>Conclusion</h3>
 
-<p>This article is a quick exploration of what it is possible to do if you find WebDAV running on a web server. Although less likely these days. To help illustrate this we have mainly used the GRANNY machine from Hack the Box. The reason I havent included too much from GRANDPA is because you get basically the same result but all good for practice.</p>
+<p>placeholder</p>
 
 <p>Any comments or questions please contact me on twitter at the link at the top of the page.</p>
 
 <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="0x221b" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000" data-font-color="#000" data-coffee-color="#fff"></script>
-
-<p>I am currently transfering some pages from my old <a href="https://testofpen.wordpress.com/">blog</a>, visit there for more content in the mean time.</p>
 
 <p><img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
 
@@ -347,62 +354,67 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
                 
                 
                 
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/blog-cover.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; Hacker Street &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/owasp/">Owasp</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/OWASP-Top-10-XXE">OWASP Top 10 XXE (or taking liberties with acronyms)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/OWASP-Top-10-Command-Injection">OWASP Top 10 OS Command Injection</a></li>
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/owasp/">
+                                
+                                    See all 2 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/OWASP-Top-10-XXE">
-                <div class="post-card-image" style="background-image: url(/assets/images/XXE-title.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/OWASP-Top-10-XXE">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Owasp</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Web</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">OWASP Top 10 XXE (or taking liberties with acronyms)</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p></p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/221b.png" alt="0x221B" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/0x221B/">0x221B</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
@@ -411,12 +423,12 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/LFI-to-RCE">
-                <div class="post-card-image" style="background-image: url(/assets/images/LFI-title.png)"></div>
+            <a class="post-card-image-link" href="/SSRF">
+                <div class="post-card-image" style="background-image: url(/assets/images/SSRF-Title.png)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/LFI-to-RCE">
+            <a class="post-card-content-link" href="/SSRF">
                 <header class="post-card-header">
                     
                         
@@ -426,7 +438,7 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
                         
                     
 
-                    <h2 class="post-card-title">Finding, Exploiting and Escalating LFI</h2>
+                    <h2 class="post-card-title">SSRF - Location and Exploitation</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
@@ -472,18 +484,18 @@ And there we go we have RCE on GRANNY. Not a sentence I thought I would ever say
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Hacking WebDAV with Granny and Grandpa</div>
+    <div class="floating-header-title">OWASP Top 10 SQL Injection</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Hacking+WebDAV+with+Granny+and+Grandpa&amp;url=https://0x221b.github.io/Webdav-with-Granny-and-Grandpa"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=OWASP+Top+10+SQL+Injection&amp;url=https://0x221b.github.io/OWASP-Top-10-SQL-Injection"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/Webdav-with-Granny-and-Grandpa"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://0x221b.github.io/OWASP-Top-10-SQL-Injection"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

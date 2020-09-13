@@ -219,7 +219,7 @@ into the {body} of the default.hbs template -->
 
 <h3>SSRF from XSS</h3>
 
-<p>@georgeomnet posted an example of how to escalate an XSS to SSRF:</p>
+<p>@georgeomnet posted an example of how to escalate an XSS to SSRF on a site if it uses caching:</p>
 
 <p>&lt; esi:include src=”http ://site.com/capture” /&gt;</p>
 
@@ -232,6 +232,8 @@ into the {body} of the default.hbs template -->
 <p>This article has covered the basics of SSRF but like most web vulns there are always new tricks and traps coming out. I will be updating this blog as I discover more info so check back another time.</p>
 
 <p>Any comments, resource suggestions or questions please contact me on twitter at the link at the top of the page.</p>
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="0x221b" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000" data-font-color="#000" data-coffee-color="#fff"></script>
 
 <p><img src="assets/images/221b.png" alt="&quot;0x221B&quot;" /></p>
 
@@ -318,6 +320,15 @@ into the {body} of the default.hbs template -->
                                 
                                   
                                     
+                                        
+                                        
+                                            <li><a href="/OWASP-Top-10-SQL-Injection">OWASP Top 10 SQL Injection</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
                                   
                                 
                                   
@@ -342,8 +353,6 @@ into the {body} of the default.hbs template -->
                                     
                                         
                                         
-                                            <li><a href="/LFI-to-RCE">Finding, Exploiting and Escalating LFI</a></li>
-                                        
                                     
                                   
                                 
@@ -361,7 +370,7 @@ into the {body} of the default.hbs template -->
                         <footer class="read-next-card-footer">
                             <a href="/tag/web/">
                                 
-                                    See all 4 posts  →
+                                    See all 5 posts  →
                                 
                             </a>
                         </footer>
@@ -370,6 +379,59 @@ into the {body} of the default.hbs template -->
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/OWASP-Top-10-SQL-Injection">
+                <div class="post-card-image" style="background-image: url(/assets/images/SQLI-title.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/OWASP-Top-10-SQL-Injection">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Owasp</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Web</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">OWASP Top 10 SQL Injection</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/221b.png" alt="0x221B" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/0x221B/">0x221B</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
