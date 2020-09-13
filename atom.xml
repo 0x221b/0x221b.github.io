@@ -8,21 +8,6 @@
     
       
       <item>
-        <title>OWASP Top 10 SQL Injection</title>
-        
-          <description>&lt;p&gt;As in my article on Command Injection the aim of this post is to consolidate my knowledge on an issue in the OWASP Top 10 and add to it as I learn more so I have a constantly expanding reference guide and hopefully help out anyone who stumbles across this.&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Mon, 07 Sep 2020 00:00:00 +0100</pubDate>
-        <link>
-        http://localhost:4000/OWASP-Top-10-SQL-Injection</link>
-        <guid isPermaLink="true">http://localhost:4000/OWASP-Top-10-SQL-Injection</guid>
-      </item>
-      
-    
-      
-      <item>
         <title>SSRF - Location and Exploitation</title>
         
           <description>&lt;p&gt;Server Side Request Forgery (SSRF) is an exploit that allows an attacker to make arbitrary HTTP requests from the web server. These could be to access an internal network or to reach out to a malicious site, essentially turning the web server into a proxy server.&lt;/p&gt;
