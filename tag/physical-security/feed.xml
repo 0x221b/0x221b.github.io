@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator>
+  <link href="http://localhost:4000/tag/physical-security/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="http://localhost:4000/" rel="alternate" type="text/html" />
+  <updated>2020-09-18T20:01:14+01:00</updated>
+  <id>http://localhost:4000/tag/physical-security/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Hacker Street | </title>
+  
+
+  
+    <subtitle></subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Physical Security Vulnerability Disclosure</title>
+      <link href="http://localhost:4000/Physical-Security-Vulnerability-Disclosure" rel="alternate" type="text/html" title="Physical Security Vulnerability Disclosure" />
+      <published>2020-09-18T00:00:00+01:00</published>
+      <updated>2020-09-18T00:00:00+01:00</updated>
+      <id>http://localhost:4000/Physical-Security-Vulnerability-Disclosure</id>
+      <content type="html" xml:base="http://localhost:4000/Physical-Security-Vulnerability-Disclosure">&lt;p&gt;&lt;i&gt;Today we have the first of our guest blogs. A great write up of a physical security assessment by Jordan with some important takeaway points for anyone who works in an office. Jordan can be found on on LinkedIn &lt;a href=&quot;https://www.linkedin.com/in/jordan-glover-ab835550&quot;&gt;here&lt;/a&gt;&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;Companies strive to be secure…Right? Your networks are secured, your applications are secure, your products and services seem impenetrable. You’ve got a tight-knit team that you trust and you’ve got the perfect working environment. The office space you’ve rented out is a great place to be, it feels like our second home.  You enter the office building by keycard, you say ‘good morning’ to reception and you get on with your day. You’ve finished up and just before you leave you hit that green button to open the door on the way out.&lt;/p&gt;
+
+&lt;p&gt;Recently I submitted a vulnerability disclosure to a company that rents out office space. This building hosts over 90 businesses inside, covering a variety of industries.&lt;/p&gt;
+
+&lt;p&gt;I didn’t have any tools or equipment with me, I was smartly dressed carrying a black leather conference folder.&lt;/p&gt;
+
+&lt;h4&gt;Gaining Access&lt;/h4&gt;
+&lt;p&gt;The main entrance to the building required a RFID card to access from street level. There was also a button to call through to reception.&lt;/p&gt;
+
+&lt;p&gt;Two personnel walked up the steps to the door, deep in conversation. One pulled out their card, scanned it and pulled the door open. Carrying on with their conversation they held the door open for me. A quick “Thanks” and they approached the lifts. Once inside there were only two options, take the lift or take a staircase.&lt;/p&gt;
+
+&lt;h4&gt;Internal Movement&lt;/h4&gt;
+&lt;p&gt;I chose to take the stairs. At the top you could turn left to Reception, or turn right for the meeting rooms. All four large meeting rooms had unsecured computing equipment in them. The final door lead to another staircase that accessed all floors of the building. I turned back and headed to reception.&lt;/p&gt;
+
+&lt;h4&gt;Reception&lt;/h4&gt;
+&lt;p&gt;On entering the reception area, you are met with a large desk. To the left of the desk are the lifts, these make a loud audible tone just before the doors open. To the right is a throughway to the rest of the floor.&lt;/p&gt;
+
+&lt;p&gt;The reception desk was empty. I could hear people clearly in conversation behind a door. I waited for several minutes before passing the desk and freely moved around the rest of the spaces on that floor. I returned to the desk and it remained empty. The computing equipment behind the desk was freely accessible. I left the reception area and headed back to the staircase, that allowed me access to all floors.&lt;/p&gt;
+
+&lt;h4&gt;Internal Movement&lt;/h4&gt;
+&lt;p&gt;From the stairwell, each floor was identified numerically. I visited every floor and walked around the floors and office spaces. I was met be several people on each floor, however never challenged.&lt;/p&gt;
+
+&lt;h4&gt;Exiting&lt;/h4&gt;
+
+&lt;p&gt;Leaving the building was via the same route as entry, RFID wasn’t required to exit, only a push button to unlock the door. Out of curiosity, I visited the rear of the building. To my surprise I saw three personnel exit the building through a fire door. It did look like it had been propped open, I didn’t go and check this though.&lt;/p&gt;
+
+&lt;h4&gt;Concerns&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;In addition to the unsecured computing equipment, on the same floor as Reception, there was a Wireless Access Point that had been removed from its fixing bracket, I was able to read the configuration passwords on the back.&lt;/li&gt;
+  &lt;li&gt;On one of the higher floors I was able to access an ethernet switch. Complete access was available to all the ports, there were no port locks installed on empty ports.&lt;/li&gt;
+  &lt;li&gt;Reception – This concerns me a lot, as a reception desk has a duty and responsibility. A similar role to a sangar, or guard duty. If the lift had made the sound, would the person have walked over, are they relying on the sound to let them know someone has arrived in the area?&lt;/li&gt;
+  &lt;li&gt;I passed a large number of people in the building and not once was I challenged.&lt;/li&gt;
+  &lt;li&gt;Entry was a simple tailgate. Is this a habit of personnel to let people in behind them?&lt;/li&gt;
+  &lt;li&gt;The fire escape, why are personnel using this freely?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If want to take anything away from reading this, let it be this – If it doesn’t look or sound right, it’s probably not. Don’t be afraid to ask a simple question “Would you like me to help you find who you are looking for” “Have you got your card with you”. No one should be frowned upon for doing the right thing.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/Images/Physical-writeup.png&quot; alt=&quot;Write-up image&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jordan</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Physical-Security" />
+      
+
+      
+        <summary type="html">Today we have the first of our guest blogs. A great write up of a physical security assessment by Jordan with some important takeaway points for anyone who works in an office. Jordan can be found on on LinkedIn here</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>
